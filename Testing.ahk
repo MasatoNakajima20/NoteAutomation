@@ -13,7 +13,7 @@ MainGuiHelpBtn.OnEvent("Click", function_help)
 MainGui.Show()
 
 HelpGui := Gui(,"Help",)
-HelpGui.Add("Text", "w300","This is the help window. You can see all available commands that you can use for automation")
+HelpGui.Add("Text", "w300","This is the help window. You can see all available commands that you can use for automation.{Enter}To use this, simply type in the code eg. !cc the press enter. It should be translated to the full note")
 HelpGui.Add("Text", "w300",)
 HelpGui.Add("Text", "w300","EMAIL TEMPLATES")
 HelpGui.Add("Text", "w300","!cc - Marked As completed")
@@ -28,6 +28,12 @@ HelpGui.Add("Text", "w300","!vm - Left Voicemail")
 HelpGui.Add("Text", "w300",)
 HelpGuiCloseBtn := HelpGui.Add("Button", "Default w100", "Close")
 HelpGuiCloseBtn.OnEvent("Click", function_closehelp)
+
+InfoGui := Gui(,"Information",)
+InfoGui.Add("Text","w300","Enter Information Below")
+AddInfo := InfoGui.Add("Edit","w300 h50 vInfoGuiAddInfo","")
+InfoGuiSubmitBtn := InfoGui.Add("Button", "Default w100", "Submit")
+InfoGuiSubmitBtn.OnEvent("Click", function_infosubmit)
 
 function_close(*)
 {
@@ -46,9 +52,23 @@ function_closehelp(*)
     MainGui.Show()
 }
 
+function_showinfogui(*)
+{
+    InfoGui.Show()
+    WinWaitClose("Information")
+}
+
+function_infosubmit(*)
+{
+    Info := AddInfo.Value
+    AddInfo.Value := ""
+    InfoGui.Hide()
+    Return Info
+}
+
 ::!cc::
 {
-    Send "All Task has been completed.{Enter Enter}Marking Ticket as Complete"
+    Send "All Task has been completed.{Enter}Marking Ticket as Complete"
 }
 
 ::!cb::
@@ -78,7 +98,7 @@ function_closehelp(*)
 ::!ud::
 {
     CustName := InputBox("Enter Client Name","Client Name")
-    Send "Hi " CustName.Value ",{Enter Enter}This has been Completed{Enter}User Account has been Disabled and all Access has been removed.{Enter Enter}Regards,{Enter}" YourName.Value
+    Send "Hi " CustName.Value ",{Enter Enter}This has been Completed{Enter}User Account has been Disabled, Marked as archive and removed from the Address Lists. All Access has been removed.{Enter}Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List{Enter Enter}Regards,{Enter}" YourName.Value
 }
 
 ::!vm::
@@ -86,5 +106,14 @@ function_closehelp(*)
     CustPhone := InputBox("Enter Number Called","Phone Number")
     Send "Tried to Call the Client on Phone" CustPhone.Value "{Enter}There was no Answer `- Left Voicemail"
 }
+
+::!test::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    function_showinfogui
+    Send "Hello " CustName.Value
+    Send 
+}
+
 
 return
