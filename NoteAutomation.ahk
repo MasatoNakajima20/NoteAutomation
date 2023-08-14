@@ -17,7 +17,7 @@ HelpGui.Add("Text", "w300","This is the help window. You can see all available c
 HelpGui.Add("Text", "w300","To use this, simply type in the code eg. !cc the press enter. It should be translated to the full entry. Some might ask you to put in some inputs when required.")
 HelpGui.Add("Text", "w300",)
 HelpGui.Add("Text", "w300","EMAIL TEMPLATES")
-HelpGui.Add("Text", "w300","!ar - Marked As completed")
+HelpGui.Add("Text", "w300","!ar - Send Approval Required Email")
 HelpGui.Add("Text", "w300","!cc - Marked As completed")
 HelpGui.Add("Text", "w300","!cb - Missed Callback")
 HelpGui.Add("Text", "w300","!mg - Mailbox Permission Granted")
