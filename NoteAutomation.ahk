@@ -22,6 +22,7 @@ HelpGui.Add("Text", "w300","!cc - Marked As completed")
 HelpGui.Add("Text", "w300","!cb - Missed Callback")
 HelpGui.Add("Text", "w300","!mg - Mailbox Permission Granted")
 HelpGui.Add("Text", "w300","!mr - Mailbox Permission Removed")
+HelpGui.Add("Text", "w300","!pr - Password Reset")
 HelpGui.Add("Text", "w300","!uc - User Created")
 HelpGui.Add("Text", "w300","!ud - User Deactivated")
 HelpGui.Add("Text", "w300",)
@@ -128,6 +129,23 @@ function_infosubmit(*)
         "Hello " CustName.Value ",{Enter}"
         "{Enter}"
         "Mailbox Access has been Removed. Please allow 30 minutes of replication time. Mailbox Should automatically disappear from Outlook, if not, closing/re-opening of outlook might be required{Enter}"
+        "If there are any issues, please let us know{Enter}"
+        "{Enter}"
+        "Regards,{Enter}"
+        YourName.Value
+    )
+}
+
+::!pr::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    UserName := InputBox("Enter User Name","User Name")
+    Password := InputBox("Enter Password","Password")
+    Send 
+    (
+        "Hello " CustName.Value ",{Enter}"
+        "{Enter}"
+        "Password for " UserName.Value " Has been reset to - " Password.Value " - Please have this tested.{Enter}"
         "If there are any issues, please let us know{Enter}"
         "{Enter}"
         "Regards,{Enter}"
