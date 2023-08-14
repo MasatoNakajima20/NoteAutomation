@@ -16,6 +16,7 @@ HelpGui := Gui(,"Help",)
 HelpGui.Add("Text", "w300","This is the help window. You can see all available commands that you can use for automation.{Enter}To use this, simply type in the code eg. !cc the press enter. It should be translated to the full note")
 HelpGui.Add("Text", "w300",)
 HelpGui.Add("Text", "w300","EMAIL TEMPLATES")
+HelpGui.Add("Text", "w300","!ar - Marked As completed")
 HelpGui.Add("Text", "w300","!cc - Marked As completed")
 HelpGui.Add("Text", "w300","!cb - Missed Callback")
 HelpGui.Add("Text", "w300","!mg - Mailbox Permission Granted")
@@ -30,10 +31,12 @@ HelpGuiCloseBtn := HelpGui.Add("Button", "Default w100", "Close")
 HelpGuiCloseBtn.OnEvent("Click", function_closehelp)
 
 InfoGui := Gui(,"Information",)
-InfoGui.Add("Text","w300","Enter Information Below")
-AddInfo := InfoGui.Add("Edit","w300 h50 vInfoGuiAddInfo","")
+InfoGui.Add("Text","w300","Enter Additional Information Below")
+InfoGui.Add("Text","w300","This will timeout in 15 Seconds")
+AddInfo := InfoGui.Add("Edit","w300 h50","")
 InfoGuiSubmitBtn := InfoGui.Add("Button", "Default w100", "Submit")
 InfoGuiSubmitBtn.OnEvent("Click", function_infosubmit)
+InfoGui.OnEvent("Close", function_infosubmit)
 
 function_close(*)
 {
@@ -52,18 +55,20 @@ function_closehelp(*)
     MainGui.Show()
 }
 
-function_showinfogui(*)
-{
-    InfoGui.Show()
-    WinWaitClose("Information")
-}
-
 function_infosubmit(*)
 {
-    Info := AddInfo.Value
-    AddInfo.Value := ""
     InfoGui.Hide()
-    Return Info
+    Return
+}
+
+::!ar::
+{
+    ApproverName := InputBox("Enter Approvers Name","Approvers Name")
+    RequestorName := InputBox("Enter Requestors Name","Requestors Name")
+    InfoGui.Show()
+    sleep 15000
+    Send "Hi " ApproverName.Value ",{Enter Enter}" RequestorName.Value " has requested the following{Enter Enter}" AddInfo.Value "{Enter Enter}. Please let us know if you approve this request.{Enter Enter}Regards,{Enter}" YourName.Value
+    AddInfo.Value := ""
 }
 
 ::!cc::
@@ -110,10 +115,9 @@ function_infosubmit(*)
 ::!test::
 {
     CustName := InputBox("Enter Client Name","Client Name")
-    function_showinfogui
-    Send "Hello " CustName.Value
-    Send 
+    InfoGui.Show()
+    sleep 15000
+    Send "Hello " CustName.Value "{Enter Enter}" AddInfo.Value "{Enter Enter}Regards,{Enter}" YourName.Value
 }
-
 
 return
