@@ -1,10 +1,10 @@
 ﻿#SingleInstance
-SendMode "InputThenPlay"
-SetKeyDelay 50,50,"Play"
+SendMode "Event"
+SetKeyDelay 30,10
 
-YourName := InputBox("Enter your name","Operatorn Name Input")
+YourName := InputBox("Enter your name","Operator Name Input")
 
-MainGui := Gui(,"Evo Automation v0.2 BETA",)
+MainGui := Gui(,"Evo Automation v0.2.1 BETA",)
 
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", YourName.Value)
@@ -80,6 +80,8 @@ function_changehelp(*)
             "!mg - Mailbox Permission Granted`r"
             "!mr - Mailbox Permission Removed`r"
             "!pr - Password Reset`r"
+            "!spg - SharePoint Permission Granted`r"
+            "!spr - SharePoint Permission Removed`r"
             "!uc - User Created`r"
             "!ud - User Deactivated`r"
         )
@@ -253,6 +255,40 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Password for " UserName.Value " Has been reset to - " Password.Value " - Please have this tested.`r"
+        "If there are any issues, please let us know`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!spg::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Access to SharePoint has been granted. This should take from 5 minutes up to 30 minutes to reflect`r"
+        "If you're using One Drive, please be advised that this will not show up automatically in File Explorer and needs to be synced Manually`r"
+        "`r"
+        "If there are any issues, please let us know`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!spr::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Access to SharePoint has been revoked. This should take from 5 minutes up to 30 minutes to reflect`r"
+        "If you're using One Drive, the sync should stop automatically. However, the folder still needs to be removed manually from the machine`r"
+        "`r"
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"

@@ -35,3 +35,10 @@ Made Help Window Multipaged
 Added more Functions
 !calg
 !calr
+!spg
+!spr
+
+08-25-2023 - John
+v0.2.1
+Added Key Delay for more Reliability when using the script in chrome
+GUI Fixes
