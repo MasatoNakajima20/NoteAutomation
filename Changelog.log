@@ -1,10 +1,12 @@
 08-11-2023 - John
+v0.1
 Creaed Base Script
 !cc
 !mg
 !vm
 
 08-13-2023 - John
+v0.1.1
 Added Gui for Main Menu and Help
 Added Few More Functions
 !uc
@@ -13,6 +15,7 @@ Added Few More Functions
 !mr
 
 08-14-2023 - John
+v0.1.2
 Changed Template for Easier Readability
 Made some changes to the notes to provide more information.
 Updated Help
@@ -20,3 +23,15 @@ Additional Information GUI on Beta
 Added Few More Functions
 !ar
 !pr
+
+08-23-2023 - John
+v0.1.3
+Moved from Send to SendText
+Moved from using {Enter} to `r (Return Carriage)
+
+08-24-2023 - John
+v0.2
+Made Help Window Multipaged
+Added more Functions
+!calg
+!calr

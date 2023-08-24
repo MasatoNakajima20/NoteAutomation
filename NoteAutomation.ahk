@@ -1,34 +1,32 @@
 ﻿#SingleInstance
+SendMode "InputThenPlay"
+SetKeyDelay 50,50,"Play"
 
 YourName := InputBox("Enter your name","Operatorn Name Input")
 
-MainGui := Gui(,"Evo Automation v0.1 BETA",)
+MainGui := Gui(,"Evo Automation v0.2 BETA",)
 
-MainGui.Add("Text", "w300", "Current Operator:")
-MainGui.Add("Text", "w300", YourName.Value)
+MainGui.Add("Text", "w200", "Current Operator:")
+MainGui.Add("Text", "w200", YourName.Value)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
 MainGuiCloseBtn.OnEvent("Click", function_close)
 MainGuiHelpBtn := MainGui.Add("Button","Default w100","Help")
 MainGuiHelpBtn.OnEvent("Click", function_help)
 MainGui.Show()
 
+Global PageNumber := 1
+
 HelpGui := Gui(,"Help",)
 HelpGui.Add("Text", "w300","This is the help window. You can see all available commands that you can use for automation.")
-HelpGui.Add("Text", "w300","To use this, simply type in the code eg. !cc the press enter. It should be translated to the full entry. Some might ask you to put in some inputs when required.")
+HelpGui.Add("Text", "w300","To use this, simply type in the code eg. !cc then press enter or space. It should be translated to the full entry. Some might ask you to put in some inputs when required.")
 HelpGui.Add("Text", "w300",)
-HelpGui.Add("Text", "w300","EMAIL TEMPLATES")
-HelpGui.Add("Text", "w300","!ar - Send Approval Required Email")
-HelpGui.Add("Text", "w300","!cc - Marked As completed")
-HelpGui.Add("Text", "w300","!cb - Missed Callback")
-HelpGui.Add("Text", "w300","!mg - Mailbox Permission Granted")
-HelpGui.Add("Text", "w300","!mr - Mailbox Permission Removed")
-HelpGui.Add("Text", "w300","!pr - Password Reset")
-HelpGui.Add("Text", "w300","!uc - User Created")
-HelpGui.Add("Text", "w300","!ud - User Deactivated")
-HelpGui.Add("Text", "w300",)
-HelpGui.Add("Text", "w300","INTERNAL NOTES")
-HelpGui.Add("Text", "w300","!vm - Left Voicemail")
-HelpGui.Add("Text", "w300",)
+HelpGuiMessage := HelpGui.Add("Text","w300 h300","")
+function_changehelp()
+HelpGuiBackBtn := HelpGui.Add("Button", "Default w100 ym", "Back")
+HelpGuiBackBtn.OnEvent("Click", function_backhelp)
+HelpGuiNextBtn := HelpGui.Add("Button", "Default w100", "Next")
+HelpGuiNextBtn.OnEvent("Click", function_nexthelp)
+HelpGui.Add("Text", "",)
 HelpGuiCloseBtn := HelpGui.Add("Button", "Default w100", "Close")
 HelpGuiCloseBtn.OnEvent("Click", function_closehelp)
 
@@ -39,6 +37,9 @@ AddInfo := InfoGui.Add("Edit","w300 h50","")
 InfoGuiSubmitBtn := InfoGui.Add("Button", "Default w100", "Submit")
 InfoGuiSubmitBtn.OnEvent("Click", function_infosubmit)
 InfoGui.OnEvent("Close", function_infosubmit)
+
+Message1 := ""
+Message2 := ""
 
 function_close(*)
 {
@@ -63,45 +64,151 @@ function_infosubmit(*)
     Return
 }
 
+function_changehelp(*)
+{
+    Global PageNumber
+    if(PageNumber == 1) {
+        HelpMessage := (
+            "HELP PAGE 1`r"
+            "EMAIL TEMPLATES`r"
+            "`r"
+            "!ar - Send Approval Required Email`r"
+            "!calg - Calendar Access Granted`r"
+            "!calr - Calendar Access Revoked`r"
+            "!cc - Marked As completed`r"
+            "!cb - Missed Callback`r"
+            "!mg - Mailbox Permission Granted`r"
+            "!mr - Mailbox Permission Removed`r"
+            "!pr - Password Reset`r"
+            "!uc - User Created`r"
+            "!ud - User Deactivated`r"
+        )
+    } else if(PageNumber == 2) {
+        HelpMessage := (
+            "HELP PAGE 2`r"
+            "INTERNAL NOTES`r"
+            "`r"
+            "!vm - Left Voicemail`r"
+        )
+    } else if(PageNumber == 3) {
+        HelpMessage := (
+            "HELP PAGE 3`r"
+            "Nothing in Here Yet"
+            "`r"
+        )
+    } else if(PageNumber == 4) {
+        HelpMessage := (
+            "HELP PAGE 4`r"
+            "Nothing in Here Yet"
+            "`r"
+        )
+    }
+
+    HelpGuiMessage.Value := HelpMessage
+
+}
+
+function_backhelp(*)
+{
+    Global PageNumber
+    if(PageNumber == 1) {
+
+    } else {
+        PageNumber := PageNumber - 1
+        function_changehelp()
+    }
+}
+
+function_nexthelp(*)
+{
+    Global PageNumber
+    if(PageNumber == 4) {
+
+    } else {
+        PageNumber := PageNumber + 1
+        function_changehelp()
+    }
+}
+
 ::!ar::
 {
     ApproverName := InputBox("Enter Approvers Name","Approvers Name")
     RequestorName := InputBox("Enter Requestors Name","Requestors Name")
     InfoGui.Show()
     sleep 15000
-    Send 
+    SendText 
     (
-        "Hello " ApproverName.Value ",{Enter}"
-        "{Enter}"
-        "We have received this request from " RequestorName.Value " today.{Enter}"
-        "{Enter}"
-        AddInfo.Value "{Enter}"
-        "{Enter}"
-        "Can you please reply and confirm your approval? Once we have this I will schedule it to an engineer to action.{Enter}"
-        "If you have any queries, please do not hesitate to contact the Helpdesk.{Enter}"
-        "{Enter}"
-        "Regards,{Enter}"
+        "Hi " ApproverName.Value ",`r"
+        "`r"
+        "We have received this request from " RequestorName.Value " today.`r"
+        "`r"
+        AddInfo.Value "`r"
+        "`r"
+        "Can you please reply and confirm your approval? Once we have this I will schedule it to an engineer to action.`r"
+        "If you have any queries, please do not hesitate to contact the Helpdesk.`r"
+        "`r"
+        "Regards,`r"
         YourName.Value
     )
     AddInfo.Value := ""
 }
 
+::!calg::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Calendar Access has been granted. Please wait for about 30 minutes for access to take effect`r"
+        "Please be advised that Calendars will need to be added manually in outlook by following the steps below`r"
+        "`r"
+        "1. Go to the Calendars `r"
+        "2. At the Top, Look for OPEN CALENDAR then select OPEN SHARED CALENDAR`r"
+        "3. Look for your calendar`r"
+        "`r"
+        "If there are any issues, please let us know`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!calr::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Calendar Access has been revoked. Calendar will need to be removed Manually`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
 ::!cc::
 {
-    Send "All Task has been completed.{Enter}Marking Ticket as Complete"
+    SendText
+    (
+        "All Task has been completed.`r"
+        "Marking Ticket as Complete"
+    )
 }
 
 ::!cb::
 {
     CustName := InputBox("Enter Client Name","Client Name")
-    Send 
+    SendText 
     (
-        "Hello " CustName.Value ",{Enter}"
-        "{Enter}"
-        "Tried to call but there was no answer. Can you please ring me back whenever you're free on 03 5222 6677 or reply to this email if you want to schedule in a time for the call.{Enter}"
-        "Hope to hear from you soon.{Enter}"
-        "{Enter}"
-        "Regards,{Enter}"
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Tried to call but there was no answer. Can you please ring me back whenever you're free on 03 5222 6677 or reply to this email if you want to schedule in a time for the call.`r"
+        "`r"
+        "Hope to hear from you soon.`r"
+        "`r"
+        "Regards,`r"
         YourName.Value
     )
 }
@@ -109,14 +216,14 @@ function_infosubmit(*)
 ::!mg::
 {
     CustName := InputBox("Enter Client Name","Client Name")
-    Send 
+    SendText 
     (
-        "Hello " CustName.Value ",{Enter}"
-        "{Enter}"
-        "Mailbox Access has been granted. Please allow 30 minutes of replication time. Mailbox Should automatically show up on Outlook, if not, closing/re-opening of outlook might be required{Enter}"
-        "If there are any issues, please let us know{Enter}"
-        "{Enter}"
-        "Regards,{Enter}"
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Mailbox Access has been granted. Please allow 30 minutes of replication time. Mailbox Should automatically show up on Outlook, if not, closing/re-opening of outlook might be required`r"
+        "If there are any issues, please let us know`r"
+        "`r"
+        "Regards,`r"
         YourName.Value
     )
 }
@@ -124,14 +231,14 @@ function_infosubmit(*)
 ::!mr::
 {
     CustName := InputBox("Enter Client Name","Client Name")
-    Send 
+    SendText 
     (
-        "Hello " CustName.Value ",{Enter}"
-        "{Enter}"
-        "Mailbox Access has been Removed. Please allow 30 minutes of replication time. Mailbox Should automatically disappear from Outlook, if not, closing/re-opening of outlook might be required{Enter}"
-        "If there are any issues, please let us know{Enter}"
-        "{Enter}"
-        "Regards,{Enter}"
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Mailbox Access has been Removed. Please allow 30 minutes of replication time. Mailbox Should automatically disappear from Outlook, if not, closing/re-opening of outlook might be required`r"
+        "If there are any issues, please let us know`r"
+        "`r"
+        "Regards,`r"
         YourName.Value
     )
 }
@@ -141,14 +248,14 @@ function_infosubmit(*)
     CustName := InputBox("Enter Client Name","Client Name")
     UserName := InputBox("Enter User Name","User Name")
     Password := InputBox("Enter Password","Password")
-    Send 
+    SendText 
     (
-        "Hello " CustName.Value ",{Enter}"
-        "{Enter}"
-        "Password for " UserName.Value " Has been reset to - " Password.Value " - Please have this tested.{Enter}"
-        "If there are any issues, please let us know{Enter}"
-        "{Enter}"
-        "Regards,{Enter}"
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Password for " UserName.Value " Has been reset to - " Password.Value " - Please have this tested.`r"
+        "If there are any issues, please let us know`r"
+        "`r"
+        "Regards,`r"
         YourName.Value
     )
 }
@@ -158,18 +265,18 @@ function_infosubmit(*)
     CustName := InputBox("Enter Client Name","Client Name")
     InfoGui.Show()
     sleep 15000
-    Send 
+    SendText 
     (
-        "Hello " CustName.Value ",{Enter}"
-        "{Enter}"
-        "User account has been created with the following details as below{Enter}"
-        "{Enter}"
-        AddInfo.Value "{Enter}"
-        "{Enter}"
-        "Please have the login tested and all access.{Enter}"
-        "Please get back to us if there are any issues.{Enter}"
-        "{Enter}"
-        "Regards,{Enter}"
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "User account has been created with the following details as below`r"
+        "`r"
+        AddInfo.Value "`r"
+        "`r"
+        "Please have the login tested and all access.`r"
+        "Please get back to us if there are any issues.`r"
+        "`r"
+        "Regards,`r"
         YourName.Value
     )
     AddInfo.Value := ""
@@ -178,15 +285,15 @@ function_infosubmit(*)
 ::!ud::
 {
     CustName := InputBox("Enter Client Name","Client Name")
-    Send 
+    SendText 
     (
-        "Hello " CustName.Value ",{Enter}"
-        "{Enter}"
-        "This has been Completed{Enter}"
-        "User Account has been Disabled, Marked as archive and removed from the Address Lists. All Access has been removed.{Enter}"
-        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List{Enter}"
-        "{Enter}"
-        "Regards,{Enter}"
+        "Hi " CustName.Value ",`n"
+        "`n"
+        "This has been Completed`n"
+        "User Account has been Disabled, Marked as archive and removed from the Address Lists. All Access has been removed.`n"
+        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List`n"
+        "`n"
+        "Regards,`n"
         YourName.Value
     )
 }
@@ -194,16 +301,50 @@ function_infosubmit(*)
 ::!vm::
 {
     CustPhone := InputBox("Enter Number Called","Phone Number")
-    Send
+    SendText
     (
-        "Tried to Call the Client on Phone " CustPhone.Value "{Enter}"
+        "Tried to Call the Client on Phone " CustPhone.Value "`r"
         "There was no Answer `- Left Voicemail"
     )
 }
 
 ::!test::
 {
-    
+    ChangingGui := Gui(,"Changing",)
+    CurrentPage := 1
+    Page := ChangingGui.Add("Text","w300","Page: " CurrentPage)
+    Text := ChangingGui.Add("Text","w300 h300","You are on Page 1")
+    BackButton := ChangingGui.Add("Button","Default w100","Back")
+    NextButton := ChangingGui.Add("Button","Default w100","Next")
+    BackButton.OnEvent("Click", back_function)
+    NextButton.Onevent("Click", next_function)
+    ChangingGui.Show
+
+    back_function(*) {
+        CurrentPage := CurrentPage - 1
+        Page.Value := "Page: " CurrentPage
+        display_function()
+    }
+
+    next_function(*) {
+        CurrentPage := CurrentPage + 1
+        Page.Value := "Page: " CurrentPage
+        display_function()
+    }
+
+    display_function(*)
+    {
+        if(CurrentPage == 1){
+            ThisText := (
+                "This is line 1`r"
+                "This is line 2`r"
+            )
+            Text.Value := ThisText
+        }else if(CurrentPage == 2){
+            ThisText := "You are on Page 2"
+            Text.Value := ThisText
+        }
+    }
 }
 
 return
