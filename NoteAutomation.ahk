@@ -2,10 +2,15 @@
 SendMode "Event"
 SetKeyDelay 30,10
 
+;Declare Global Variables
+Global PageNumber := 1
+Global Message1 := ""
+Global Message2 := ""
+
 YourName := InputBox("Enter your name","Operator Name Input")
 
-MainGui := Gui(,"Evo Automation v0.2.1 BETA",)
-
+;Create the Main GUI
+MainGui := Gui(,"Evo Automation v0.2.1.1 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", YourName.Value)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
@@ -14,8 +19,7 @@ MainGuiHelpBtn := MainGui.Add("Button","Default w100","Help")
 MainGuiHelpBtn.OnEvent("Click", function_help)
 MainGui.Show()
 
-Global PageNumber := 1
-
+;Create the Help GUI
 HelpGui := Gui(,"Help",)
 HelpGui.Add("Text", "w300","This is the help window. You can see all available commands that you can use for automation.")
 HelpGui.Add("Text", "w300","To use this, simply type in the code eg. !cc then press enter or space. It should be translated to the full entry. Some might ask you to put in some inputs when required.")
@@ -30,6 +34,7 @@ HelpGui.Add("Text", "",)
 HelpGuiCloseBtn := HelpGui.Add("Button", "Default w100", "Close")
 HelpGuiCloseBtn.OnEvent("Click", function_closehelp)
 
+;Create the Additional Information GUI Form
 InfoGui := Gui(,"Information",)
 InfoGui.Add("Text","w300","Enter Additional Information Below")
 InfoGui.Add("Text","w300","This will timeout in 15 Seconds. After you click Submit, please wait for the text to process.")
@@ -38,9 +43,7 @@ InfoGuiSubmitBtn := InfoGui.Add("Button", "Default w100", "Submit")
 InfoGuiSubmitBtn.OnEvent("Click", function_infosubmit)
 InfoGui.OnEvent("Close", function_infosubmit)
 
-Message1 := ""
-Message2 := ""
-
+;Function
 function_close(*)
 {
     ExitApp
@@ -132,6 +135,7 @@ function_nexthelp(*)
     }
 }
 
+;HotStrings Declaration
 ::!ar::
 {
     ApproverName := InputBox("Enter Approvers Name","Approvers Name")
@@ -287,7 +291,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Access to SharePoint has been revoked. This should take from 5 minutes up to 30 minutes to reflect`r"
-        "If you're using One Drive, the sync should stop automatically. However, the folder still needs to be removed manually from the machine`r"
+        "If you're using One Drive, the sync should stop automatically. However, the folder still needs to be removed manually from the machine. Please make sure that the Sync symbol on the folder has already disappeared before deleting the folder`r"
         "`r"
         "If there are any issues, please let us know`r"
         "`r"
@@ -344,43 +348,10 @@ function_nexthelp(*)
     )
 }
 
+;Test Area
 ::!test::
 {
-    ChangingGui := Gui(,"Changing",)
-    CurrentPage := 1
-    Page := ChangingGui.Add("Text","w300","Page: " CurrentPage)
-    Text := ChangingGui.Add("Text","w300 h300","You are on Page 1")
-    BackButton := ChangingGui.Add("Button","Default w100","Back")
-    NextButton := ChangingGui.Add("Button","Default w100","Next")
-    BackButton.OnEvent("Click", back_function)
-    NextButton.Onevent("Click", next_function)
-    ChangingGui.Show
-
-    back_function(*) {
-        CurrentPage := CurrentPage - 1
-        Page.Value := "Page: " CurrentPage
-        display_function()
-    }
-
-    next_function(*) {
-        CurrentPage := CurrentPage + 1
-        Page.Value := "Page: " CurrentPage
-        display_function()
-    }
-
-    display_function(*)
-    {
-        if(CurrentPage == 1){
-            ThisText := (
-                "This is line 1`r"
-                "This is line 2`r"
-            )
-            Text.Value := ThisText
-        }else if(CurrentPage == 2){
-            ThisText := "You are on Page 2"
-            Text.Value := ThisText
-        }
-    }
+    
 }
 
 return
