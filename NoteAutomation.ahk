@@ -80,9 +80,12 @@ function_changehelp(*)
             "!calr - Calendar Access Revoked`r"
             "!cc - Marked As completed`r"
             "!cb - Missed Callback`r"
+            "!fg - File Share Access Granted`r"
+            "!fr - File Share Access Revoked`r"
             "!mg - Mailbox Permission Granted`r"
             "!mr - Mailbox Permission Removed`r"
             "!pr - Password Reset`r"
+            "!rep - Report Email`r"
             "!spg - SharePoint Permission Granted`r"
             "!spr - SharePoint Permission Removed`r"
             "!uc - User Created`r"
@@ -93,6 +96,7 @@ function_changehelp(*)
             "HELP PAGE 2`r"
             "INTERNAL NOTES`r"
             "`r"
+            "!testdr - Adds Template for Test Disaster Recovery`r"
             "!vm - Left Voicemail`r"
         )
     } else if(PageNumber == 3) {
@@ -219,6 +223,36 @@ function_nexthelp(*)
     )
 }
 
+::!fg::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Access to the Shared Folder in the network drive has been provided. Please allow 30 minutes of replication time. Logging Out and Logging Back in is required for access to take effect.`r"
+        "If there are any issues, please leat us know`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!fr::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Access to the Shared Folder in the network drive has been revoked. Please allow 30 minutes of replication time. Logging Out and Logging Back in is required for the revokation of access to take effect due to access tokens stored on the machine during login.`r"
+        "If there are any issues, please leat us know`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
 ::!mg::
 {
     CustName := InputBox("Enter Client Name","Client Name")
@@ -259,6 +293,21 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Password for " UserName.Value " Has been reset to - " Password.Value " - Please have this tested.`r"
+        "If there are any issues, please let us know`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!rep::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Thank you for waiting. Please see attached report/s as requested`r"
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
@@ -335,6 +384,24 @@ function_nexthelp(*)
         "`n"
         "Regards,`n"
         YourName.Value
+    )
+}
+
+;INTERNAL NOTES;
+::!testdr::
+{
+    SendText
+    (
+        "Starting Virtualization`r"
+        "VIRTUALIZATION DETAILS`r"
+        "`r"
+        "`r"
+        "Testing VM`r"
+        "Boot: `r"
+        "Login: `r"
+        "Active Directory: `r"
+        "File Shares: `r"
+        "Printers: `r"
     )
 }
 
