@@ -10,7 +10,7 @@ Global Message2 := ""
 YourName := InputBox("Enter your name","Operator Name Input")
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.2.1.1 BETA",)
+MainGui := Gui(,"Evo Automation v0.3 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", YourName.Value)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
@@ -102,8 +102,15 @@ function_changehelp(*)
     } else if(PageNumber == 3) {
         HelpMessage := (
             "HELP PAGE 3`r"
-            "Nothing in Here Yet"
+            "CUSTOM TEXT`r"
+            "You can create 5 custom text by adding in your own text file and naming it c1.txt up to c5.txt and placing it under a folder named Custom`r"
+            "The file Structure should look like as follows`r"
             "`r"
+            "AutoScript.exe`r"
+            "Custom`r"
+            "Custom\c1.txt`r"
+            "`r"
+            "Custom Text can be ran by typing !c1 to !c5 then pressing space or enter. Your custom text will then be filled in. Please note that this will not autofill any names if you're making a custom email template.`r"
         )
     } else if(PageNumber == 4) {
         HelpMessage := (
@@ -413,6 +420,57 @@ function_nexthelp(*)
         "Tried to Call the Client on Phone " CustPhone.Value "`r"
         "There was no Answer `- Left Voicemail"
     )
+}
+
+;CUSTOM SCRIPTS;
+::!c1::
+{
+    CustomText := FileRead(".\Custom\c1.txt",)
+    SendText
+    (
+        CustomText
+    )
+    CustomText := ""
+}
+
+::!c2::
+{
+    CustomText := FileRead(".\Custom\c2.txt",)
+    SendText
+    (
+        CustomText
+    )
+    CustomText := ""
+}
+
+::!c3::
+{
+    CustomText := FileRead(".\Custom\c3.txt",)
+    SendText
+    (
+        CustomText
+    )
+    CustomText := ""
+}
+
+::!c4::
+{
+    CustomText := FileRead(".\Custom\c4.txt",)
+    SendText
+    (
+        CustomText
+    )
+    CustomText := ""
+}
+
+::!c5::
+{
+    CustomText := FileRead(".\Custom\c5.txt",)
+    SendText
+    (
+        CustomText
+    )
+    CustomText := ""
 }
 
 ;Test Area

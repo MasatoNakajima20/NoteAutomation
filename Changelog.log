@@ -44,10 +44,14 @@ Added Key Delay for more Reliability when using the script in chrome
 GUI Fixes
 
 08-28-2023 - John
-v0.2.1.1
+v0.2.2
 Added Minor comments on the code
 Added more Functions
 !fg
 !fr
 !rep
 !testdr
+
+09-04-2023 - John
+v0.3
+Added ability to make custom Text using !c1 to !c5
