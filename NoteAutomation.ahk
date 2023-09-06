@@ -238,7 +238,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Access to the Shared Folder in the network drive has been provided. Please allow 30 minutes of replication time. Logging Out and Logging Back in is required for access to take effect.`r"
-        "If there are any issues, please leat us know`r"
+        "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
         YourName.Value
@@ -253,7 +253,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Access to the Shared Folder in the network drive has been revoked. Please allow 30 minutes of replication time. Logging Out and Logging Back in is required for the revokation of access to take effect due to access tokens stored on the machine during login.`r"
-        "If there are any issues, please leat us know`r"
+        "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
         YourName.Value
@@ -476,7 +476,7 @@ function_nexthelp(*)
 ;Test Area
 ::!test::
 {
-    
+
 }
 
 return
