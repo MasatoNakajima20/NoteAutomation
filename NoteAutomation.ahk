@@ -10,7 +10,7 @@ Global Message2 := ""
 YourName := InputBox("Enter your name","Operator Name Input")
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.3 BETA",)
+MainGui := Gui(,"Evo Automation v0.3.0.1 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", YourName.Value)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
@@ -237,8 +237,8 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Access to the Shared Folder in the network drive has been provided. Please allow 30 minutes of replication time. Logging Out and Logging Back in is required for access to take effect.`r"
-        "If there are any issues, please leat us know`r"
+        "Access to the Shared Network Drive / Shared Network Folder has been granted. Please allow 30 minutes of replication time. Logging Out and Logging Back in is required for access to take effect.`r"
+        "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
         YourName.Value
@@ -253,7 +253,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Access to the Shared Folder in the network drive has been revoked. Please allow 30 minutes of replication time. Logging Out and Logging Back in is required for the revokation of access to take effect due to access tokens stored on the machine during login.`r"
-        "If there are any issues, please leat us know`r"
+        "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
         YourName.Value
@@ -267,7 +267,20 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Mailbox Access has been granted. Please allow 30 minutes of replication time. Mailbox Should automatically show up on Outlook, if not, closing/re-opening of outlook might be required`r"
+        "Mailbox Access has been granted.`r"
+        "Please allow 30 minutes of replication time. Mailbox Should automatically show up on Outlook, if not, closing/re-opening of outlook might be required`r"
+        "If using Outlook Web Application (OWA) in the browser, please be advised that shared mailboxes will not show automatically. There are 2 ways to access a shared mailbox in OWA. Please follow the steps below only if using OWA`r"
+        "`r"
+        "OPENING AS ANOTHER MAILBOX`r"
+        "1. Click on the Profile Circle on the top right corner of OWA`r"
+        "2. Select Open another Mailbox`r"
+        "3. Search for your mailbox and Open`r"
+        "`r"
+        "ADDING AS SHARED FOLDER`r"
+        "1. On the left Pane, Right Click 'Folders'`r"
+        "2. Click on 'Add Shared Folder or Mailbox'`r"
+        "3. Search for your Mailbox and Add`r"
+        "`r"
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
@@ -282,7 +295,10 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Mailbox Access has been Removed. Please allow 30 minutes of replication time. Mailbox Should automatically disappear from Outlook, if not, closing/re-opening of outlook might be required`r"
+        "Mailbox Access has been Removed.`r"
+        "Please allow 30 minutes of replication time. Mailbox Should automatically disappear from Outlook, if not, closing/re-opening of outlook might be required`r"
+        "If using Outlook Web Application (OWA) in the browser, the mailbox should be removed manually if added manually before`r"
+        "`r"
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
