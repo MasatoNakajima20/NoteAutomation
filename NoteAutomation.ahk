@@ -10,7 +10,7 @@ Global Message2 := ""
 YourName := InputBox("Enter your name","Operator Name Input")
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.3.0.1 BETA",)
+MainGui := Gui(,"Evo Automation v0.3.1 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", YourName.Value)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
@@ -89,7 +89,8 @@ function_changehelp(*)
             "!spg - SharePoint Permission Granted`r"
             "!spr - SharePoint Permission Removed`r"
             "!uc - User Created`r"
-            "!ud - User Deactivated`r"
+            "!udeac - User Deactivated`r"
+            "!udel - User Deleted`r"
         )
     } else if(PageNumber == 2) {
         HelpMessage := (
@@ -345,7 +346,7 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Access to SharePoint has been granted. This should take from 5 minutes up to 30 minutes to reflect`r"
+        "Access to SharePoint / Sharepoint Library has been granted. This should take from 5 minutes up to 30 minutes to reflect`r"
         "If you're using One Drive, please be advised that this will not show up automatically in File Explorer and needs to be synced Manually`r"
         "`r"
         "If there are any issues, please let us know`r"
@@ -362,7 +363,7 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Access to SharePoint has been revoked. This should take from 5 minutes up to 30 minutes to reflect`r"
+        "Access to SharePoint / Sharepoint Library has been revoked. This should take from 5 minutes up to 30 minutes to reflect`r"
         "If you're using One Drive, the sync should stop automatically. However, the folder still needs to be removed manually from the machine. Please make sure that the Sync symbol on the folder has already disappeared before deleting the folder`r"
         "`r"
         "If there are any issues, please let us know`r"
@@ -394,7 +395,7 @@ function_nexthelp(*)
     AddInfo.Value := ""
 }
 
-::!ud::
+::!udeac::
 {
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
@@ -403,7 +404,23 @@ function_nexthelp(*)
         "`n"
         "This has been Completed`n"
         "User Account has been Disabled, Marked as archive and removed from the Address Lists. All Access has been removed.`n"
-        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List`n"
+        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow``n"
+        "`n"
+        "Regards,`n"
+        YourName.Value
+    )
+}
+
+::!udel::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`n"
+        "`n"
+        "This has been Completed`n"
+        "User Account has been Deleted as Requested. Backups have been removed. Please be advised that all data under retention will be purged after 30 days and after that, there will be no more chance of recovery`n"
+        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`n"
         "`n"
         "Regards,`n"
         YourName.Value
