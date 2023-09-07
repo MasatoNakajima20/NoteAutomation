@@ -75,30 +75,31 @@ function_changehelp(*)
             "HELP PAGE 1`r"
             "EMAIL TEMPLATES`r"
             "`r"
-            "!ar - Send Approval Required Email`r"
-            "!calg - Calendar Access Granted`r"
-            "!calr - Calendar Access Revoked`r"
-            "!cc - Marked As completed`r"
-            "!cb - Missed Callback`r"
-            "!fg - File Share Access Granted`r"
-            "!fr - File Share Access Revoked`r"
-            "!mg - Mailbox Permission Granted`r"
-            "!mr - Mailbox Permission Removed`r"
-            "!pr - Password Reset`r"
-            "!rep - Report Email`r"
-            "!spg - SharePoint Permission Granted`r"
-            "!spr - SharePoint Permission Removed`r"
-            "!uc - User Created`r"
+            "!ar    - Send Approval Required Email`r"
+            "!calg  - Calendar Access Granted`r"
+            "!calr  - Calendar Access Revoked`r"
+            "!cc    - Marked As completed`r"
+            "!cb    - Missed Callback`r"
+            "!fg    - File Share Access Granted`r"
+            "!fr    - File Share Access Revoked`r"
+            "!mg    - Mailbox Permission Granted`r"
+            "!mr    - Mailbox Permission Removed`r"
+            "!pr    - Password Reset`r"
+            "!rep   - Report Email`r"
+            "!spg   - SharePoint Permission Granted`r"
+            "!spr   - SharePoint Permission Removed`r"
+            "!uc    - User Created`r"
             "!udeac - User Deactivated`r"
-            "!udel - User Deleted`r"
+            "!udel  - User Deleted`r"
         )
     } else if(PageNumber == 2) {
         HelpMessage := (
             "HELP PAGE 2`r"
             "INTERNAL NOTES`r"
             "`r"
-            "!testdr - Adds Template for Test Disaster Recovery`r"
-            "!vm - Left Voicemail`r"
+            "!te - Add Ticket Template"
+            "!testdr   - Adds Template for Test Disaster Recovery`r"
+            "!vm       - Left Voicemail`r"
         )
     } else if(PageNumber == 3) {
         HelpMessage := (
@@ -428,6 +429,29 @@ function_nexthelp(*)
 }
 
 ;INTERNAL NOTES;
+::!te::
+{
+    SendText
+    (
+        "CLIENT INFORMATION`r"
+        "Name: `r"
+        "Organization: `r"
+        "Machine: `r"
+        "Number: `r"
+        "Location (Office / Remote): `r"
+        "`r"
+        "ISSUE`r"
+        "Repoted Issue: `r"
+        "Users Affected: `r"
+        "`r"
+        "TROUBLESHOOTING`r"
+        "->`r"
+        "`r"
+        "RESOLUTION`r"
+        "->`r"
+    )
+}
+
 ::!testdr::
 {
     SendText
