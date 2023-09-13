@@ -1,13 +1,16 @@
 08-11-2023 - John
 v0.1
-Creaed Base Script
+Created Base Script
 !cc
 !mg
 !vm
 
 08-13-2023 - John
-v0.1.1
+v0.2
+MINOR CHANGE
 Added Gui for Main Menu and Help
+
+PATCH
 Added Few More Functions
 !uc
 !ud
@@ -15,23 +18,30 @@ Added Few More Functions
 !mr
 
 08-14-2023 - John
-v0.1.2
+v0.3
+MINOR CHANGE
 Changed Template for Easier Readability
 Made some changes to the notes to provide more information.
 Updated Help
 Additional Information GUI on Beta
+
+PATCH
 Added Few More Functions
 !ar
 !pr
 
 08-23-2023 - John
-v0.1.3
+v0.3.0.1
+HOTFIX
 Moved from Send to SendText
 Moved from using {Enter} to `r (Return Carriage)
 
 08-24-2023 - John
-v0.2
+v0.4
+MINOR CHANGE
 Made Help Window Multipaged
+
+PATCH
 Added more Functions
 !calg
 !calr
@@ -39,12 +49,14 @@ Added more Functions
 !spr
 
 08-25-2023 - John
-v0.2.1
+v0.4.0.1
+HOTFIX
 Added Key Delay for more Reliability when using the script in chrome
 GUI Fixes
 
 08-28-2023 - John
-v0.2.2
+v0.5
+PATCH
 Added Minor comments on the code
 Added more Functions
 !fg
@@ -53,16 +65,26 @@ Added more Functions
 !testdr
 
 09-04-2023 - John
-v0.3
+v0.6
+MINOR CHANGE
 Added ability to make custom Text using !c1 to !c5
 
 09-05-2023 - John
-v0.3.0.1
+v0.6.0.1
+HOTFIX
 Changed some Email Template
 
 09-06-2023 - John
-v0.3.1
+v0.6.1
+HOTFIX
 Modified !ud to !udeac to give way to a new command
+
+PATCH
 Added Function
 !udel
 !te
+
+09-08-2023 - John
+v0.6.1.1
+HOTFIX
+Templates

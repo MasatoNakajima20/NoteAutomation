@@ -10,7 +10,7 @@ Global Message2 := ""
 YourName := InputBox("Enter your name","Operator Name Input")
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.3.1 BETA",)
+MainGui := Gui(,"Evo Automation v0.6.1.1 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", YourName.Value)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
@@ -223,7 +223,8 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Tried to call but there was no answer. Can you please ring me back whenever you're free on 03 5222 6677 or reply to this email if you want to schedule in a time for the call.`r"
+        "Just tired to contact you but you seem to be caught up at the moment`r"
+        "Can you please ring me back whenever you're free on 03 5222 6677 or reply to this email if you want to schedule in a time for the call.`r"
         "`r"
         "Hope to hear from you soon.`r"
         "`r"
@@ -401,13 +402,13 @@ function_nexthelp(*)
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
-        "Hi " CustName.Value ",`n"
-        "`n"
-        "This has been Completed`n"
-        "User Account has been Disabled, Marked as archive and removed from the Address Lists. All Access has been removed.`n"
-        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow``n"
-        "`n"
-        "Regards,`n"
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "This has been Completed`r"
+        "User Account has been Disabled, Marked as archive and removed from the Address Lists. All Access has been removed.`r"
+        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
+        "`r"
+        "Regards,`r"
         YourName.Value
     )
 }
@@ -417,13 +418,13 @@ function_nexthelp(*)
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
-        "Hi " CustName.Value ",`n"
-        "`n"
-        "This has been Completed`n"
-        "User Account has been Deleted as Requested. Backups have been removed. Please be advised that all data under retention will be purged after 30 days and after that, there will be no more chance of recovery`n"
-        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`n"
-        "`n"
-        "Regards,`n"
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "This has been Completed`r"
+        "User Account has been Deleted as Requested. Backups have been removed. Please be advised that all data under retention will be purged after 30 days and after that, there will be no more chance of recovery`r"
+        "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
+        "`r"
+        "Regards,`r"
         YourName.Value
     )
 }
@@ -441,7 +442,7 @@ function_nexthelp(*)
         "Location (Office / Remote): `r"
         "`r"
         "ISSUE`r"
-        "Repoted Issue: `r"
+        "Reported Issue: `r"
         "Users Affected: `r"
         "`r"
         "TROUBLESHOOTING`r"
