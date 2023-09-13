@@ -75,6 +75,7 @@ function_changehelp(*)
             "HELP PAGE 1`r"
             "EMAIL TEMPLATES`r"
             "`r"
+            "!admin - Send Admin Request Security Email"
             "!ar - Send Approval Required Email`r"
             "!calg - Calendar Access Granted`r"
             "!calr - Calendar Access Revoked`r"
@@ -147,6 +148,25 @@ function_nexthelp(*)
 }
 
 ;HotStrings Declaration
+::!admin::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "We generally advise against users having direct admin rights on their devices as it goes against security best practices and increases the risk and scope of potential incidents - particularly when it comes to malware & ransomware that may find its way onto the device.`r"
+        "`r"
+        "Granting admin rights to install software and make changes unrestricted also allows malicious software or scripts that find their way onto the device to run unchecked, as they'll also be running with admin rights by default on account of the user account being an administrator.`r"
+        "`r"
+        "If you have software that would like installed, please send through what you require and we'll schedule a time to run through the installation with you.`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
 ::!ar::
 {
     ApproverName := InputBox("Enter Approvers Name","Approvers Name")
