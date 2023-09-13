@@ -75,6 +75,7 @@ function_changehelp(*)
             "HELP PAGE 1`r"
             "EMAIL TEMPLATES`r"
             "`r"
+            "!admin - Send Admin Request Security Email"
             "!ar    - Send Approval Required Email`r"
             "!calg  - Calendar Access Granted`r"
             "!calr  - Calendar Access Revoked`r"
@@ -86,6 +87,9 @@ function_changehelp(*)
             "!mr    - Mailbox Permission Removed`r"
             "!pr    - Password Reset`r"
             "!rep   - Report Email`r"
+            "!spam  - Send Spam Acknowledgement EMail`r"
+            "!spam+ - Send Spam Positive Email`r"
+            "!spam- - Send Spam Negative Email`r"
             "!spg   - SharePoint Permission Granted`r"
             "!spr   - SharePoint Permission Removed`r"
             "!uc    - User Created`r"
@@ -149,6 +153,25 @@ function_nexthelp(*)
 }
 
 ;HotStrings Declaration
+::!admin::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "We generally advise against users having direct admin rights on their devices as it goes against security best practices and increases the risk and scope of potential incidents - particularly when it comes to malware & ransomware that may find its way onto the device.`r"
+        "`r"
+        "Granting admin rights to install software and make changes unrestricted also allows malicious software or scripts that find their way onto the device to run unchecked, as they'll also be running with admin rights by default on account of the user account being an administrator.`r"
+        "`r"
+        "If you have software that would like installed, please send through what you require and we'll schedule a time to run through the installation with you.`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
 ::!ar::
 {
     ApproverName := InputBox("Enter Approvers Name","Approvers Name")
@@ -335,6 +358,49 @@ function_nexthelp(*)
         "`r"
         "Thank you for waiting. Please see attached report/s as requested`r"
         "If there are any issues, please let us know`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!spam::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "Thank you for bringing this to our attention. Please do not open any links or attachments while we investigate the matter. If you have already clicked on any links, please give us a call immediately and we will deal with the matter with outmost urgency to make sure there are no compromise in the your account`r"
+        "I will get back to you as soon as possible`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!spam+::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "I have identified the email to be a Phishing/Spam e-mail. We have blocked the original source. Please Delete all copies of the email and delete it as well from the recycle bin.`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!spam-::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "I have identified the email to be a legitimate e-mail. This is safe to open.`r"
         "`r"
         "Regards,`r"
         YourName.Value

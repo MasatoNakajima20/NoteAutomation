@@ -88,3 +88,12 @@ Added Function
 v0.6.1.1
 HOTFIX
 Templates
+
+09-13-2023 - John
+v0.6.2
+PATCH
+Added more Functions
+!admin
+!spam
+!spam+
+!spam-
