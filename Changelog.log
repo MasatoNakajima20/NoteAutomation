@@ -97,3 +97,15 @@ Added more Functions
 !spam
 !spam+
 !spam-
+
+09-14-2023 - John
+v0.6.3
+PATCH
+Added Functions
+!callna
+!callnovm
+!callvm
+
+Removed
+!vm
+

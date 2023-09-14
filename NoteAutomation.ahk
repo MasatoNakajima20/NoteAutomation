@@ -101,9 +101,11 @@ function_changehelp(*)
             "HELP PAGE 2`r"
             "INTERNAL NOTES`r"
             "`r"
-            "!te - Add Ticket Template"
+            "!te       - Add Ticket Template"
             "!testdr   - Adds Template for Test Disaster Recovery`r"
-            "!vm       - Left Voicemail`r"
+            "!callna   - Client not Available`r"
+            "!callnovm - Client did not answer - No VM Available`r"
+            "!callvm   - Client did not answer - Left VM`r"
         )
     } else if(PageNumber == 3) {
         HelpMessage := (
@@ -322,6 +324,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Mailbox Access has been Removed.`r"
+        "`r"
         "Please allow 30 minutes of replication time. Mailbox Should automatically disappear from Outlook, if not, closing/re-opening of outlook might be required`r"
         "If using Outlook Web Application (OWA) in the browser, the mailbox should be removed manually if added manually before`r"
         "`r"
@@ -342,6 +345,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Password for " UserName.Value " Has been reset to - " Password.Value " - Please have this tested.`r"
+        "`r"
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
@@ -357,6 +361,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Thank you for waiting. Please see attached report/s as requested`r"
+        "`r"
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
@@ -372,6 +377,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Thank you for bringing this to our attention. Please do not open any links or attachments while we investigate the matter. If you have already clicked on any links, please give us a call immediately and we will deal with the matter with outmost urgency to make sure there are no compromise in the your account`r"
+        "`r"
         "I will get back to you as soon as possible`r"
         "`r"
         "Regards,`r"
@@ -432,6 +438,7 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Access to SharePoint / Sharepoint Library has been revoked. This should take from 5 minutes up to 30 minutes to reflect`r"
+        "`r"
         "If you're using One Drive, the sync should stop automatically. However, the folder still needs to be removed manually from the machine. Please make sure that the Sync symbol on the folder has already disappeared before deleting the folder`r"
         "`r"
         "If there are any issues, please let us know`r"
@@ -470,8 +477,8 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "This has been Completed`r"
-        "User Account has been Disabled, Marked as archive and removed from the Address Lists. All Access has been removed.`r"
+        "This request has been completed`r"
+        "User Account has been disabled, Marked as archive and removed from the Address Lists. All Access has been removed.`r"
         "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
         "`r"
         "Regards,`r"
@@ -486,8 +493,8 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "This has been Completed`r"
-        "User Account has been Deleted as Requested. Backups have been removed. Please be advised that all data under retention will be purged after 30 days and after that, there will be no more chance of recovery`r"
+        "This request has been completed`r"
+        "User Account has been deleted as requested. Backups have been removed. Please be advised that all data under retention will be purged after 30 days and after that, there will be no more chance of recovery`r"
         "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
         "`r"
         "Regards,`r"
@@ -526,6 +533,7 @@ function_nexthelp(*)
         "Starting Virtualization`r"
         "VIRTUALIZATION DETAILS`r"
         "`r"
+        "<ADD VIRTUALIZATION DETAILS HERE>`r"
         "`r"
         "Testing VM`r"
         "Boot: `r"
@@ -536,15 +544,39 @@ function_nexthelp(*)
     )
 }
 
-::!vm::
+
+::!callna::
 {
     CustPhone := InputBox("Enter Number Called","Phone Number")
     SendText
     (
         "Tried to Call the Client on Phone " CustPhone.Value "`r"
-        "There was no Answer `- Left Voicemail"
+        "Client is not available at the moment"
     )
 }
+
+::!callnovm::
+{
+    CustPhone := InputBox("Enter Number Called","Phone Number")
+    SendText
+    (
+        "Tried to Call the Client on Phone " CustPhone.Value "`r"
+        "There was no Answer.`r"
+        "No VM available / VM too short - Unable leave voice message for the user"
+    )
+}
+
+::!callvm::
+{
+    CustPhone := InputBox("Enter Number Called","Phone Number")
+    SendText
+    (
+        "Tried to Call the Client on Phone " CustPhone.Value "`r"
+        "There was no Answer - Left Voicemail"
+    )
+}
+
+
 
 ;CUSTOM SCRIPTS;
 ::!c1::
