@@ -76,11 +76,13 @@ function_changehelp(*)
             "EMAIL TEMPLATES`r"
             "`r"
             "!admin - Send Admin Request Security Email"
+            "!ae    - Send Escalation Accpetance`r"
             "!ar    - Send Approval Required Email`r"
             "!calg  - Calendar Access Granted`r"
             "!calr  - Calendar Access Revoked`r"
             "!cc    - Marked As completed`r"
             "!cb    - Missed Callback`r"
+            "!escal - Escalation`r"
             "!fg    - File Share Access Granted`r"
             "!fr    - File Share Access Revoked`r"
             "!mg    - Mailbox Permission Granted`r"
@@ -174,6 +176,22 @@ function_nexthelp(*)
     )
 }
 
+::!!ae::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "This ticket has been escalated and I'll be working with you on this. I'll be sending you a scheduling link so we can book in a time for me to have a look at this concern.`r"
+        "If the matter is becoming urgent, please call us back and we'll have a look if an escalation engineer is free.`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
 ::!ar::
 {
     ApproverName := InputBox("Enter Approvers Name","Approvers Name")
@@ -252,6 +270,23 @@ function_nexthelp(*)
         "Can you please ring me back whenever you're free on 03 5222 6677 or reply to this email if you want to schedule in a time for the call.`r"
         "`r"
         "Hope to hear from you soon.`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
+::!!escal::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    EscalPoint := InputBox("Enter Escalation Point (L2/SA/ITM)","Escalation Point")
+
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "I had a look but I'm unable to reolve the issue and unable to move further.`r"
+        "I will now be escalating this ticket to our " EscalPoint.Value " to further look into this concern. Please expect a call or a scheduling link for them to book in a time with you.`r"
         "`r"
         "Regards,`r"
         YourName.Value
