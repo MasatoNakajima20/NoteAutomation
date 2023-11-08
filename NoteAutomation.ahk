@@ -10,7 +10,7 @@ Global Message2 := ""
 YourName := InputBox("Enter your name","Operator Name Input")
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.6.1.1 BETA",)
+MainGui := Gui(,"Evo Automation v0.6.5 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", YourName.Value)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
@@ -75,7 +75,7 @@ function_changehelp(*)
             "HELP PAGE 1`r"
             "EMAIL TEMPLATES`r"
             "`r"
-            "!admin - Send Admin Request Security Email"
+            "!admin - Send Admin Request Security Email`r"
             "!ae    - Send Escalation Accpetance`r"
             "!ar    - Send Approval Required Email`r"
             "!calg  - Calendar Access Granted`r"
@@ -89,6 +89,7 @@ function_changehelp(*)
             "!mr    - Mailbox Permission Removed`r"
             "!pr    - Password Reset`r"
             "!rep   - Report Email`r"
+            "!smbxc - Shared Mailbox Created`r"
             "!spam  - Send Spam Acknowledgement EMail`r"
             "!spam+ - Send Spam Positive Email`r"
             "!spam- - Send Spam Negative Email`r"
@@ -103,11 +104,12 @@ function_changehelp(*)
             "HELP PAGE 2`r"
             "INTERNAL NOTES`r"
             "`r"
-            "!te       - Add Ticket Template"
+            "!te       - Add Ticket Template`r"
             "!testdr   - Adds Template for Test Disaster Recovery`r"
             "!callna   - Client not Available`r"
             "!callnovm - Client did not answer - No VM Available`r"
             "!callvm   - Client did not answer - Left VM`r"
+            "!proac    - Proactive Checks Template`r"
         )
     } else if(PageNumber == 3) {
         HelpMessage := (
@@ -404,6 +406,29 @@ function_nexthelp(*)
     )
 }
 
+::!smbxc::
+{
+    CustName := InputBox("Enter Client Name","Client Name")
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "The Shared Mailbox/es has been created as requested. Please see the details below`r"
+        "`r"
+        "Mailbox Name  : `r"
+        "Mailbox Email : `r"
+        "Type:         : Shared`r"
+        "Licensed      : No`r"
+        "Login Enabled : No`r"
+        "`r"
+        "Please be advised that these are the defaults for Shared Mailboxes. If you need to have these mailboxes authenticate / interact with a system, please be advised that mailboxes will need to be licensed for it to have the capability`r"
+        "Additional users can be added to access the mailbox via outlook by request.`r"
+        "`r"
+        "Regards,`r"
+        YourName.Value
+    )
+}
+
 ::!spam::
 {
     CustName := InputBox("Enter Client Name","Client Name")
@@ -611,6 +636,31 @@ function_nexthelp(*)
     )
 }
 
+::!proac::
+{
+    SendText
+    (
+        "Starting Proactive Checks`r"
+        "`r"
+        "Remote Admin Checks - Run RMM Script EVO - Monthly Proactive Checks Report, review and Send to Client`r"
+        "->`r"
+        "Sophos Central - Check all Firewalls, note the serial number and check if all appliance are being backed up.`r"
+        "->`r"
+        "365 - Check GA Account if Working. Make Sure KB Doc is titled EVO_GA Office 365 / Azure Global Administrator`r"
+        "->`r"
+        "Backups - Check Backups for client make sure all is working`r"
+        "->`r"
+        "Firmware Updates - Check if there are Firmware Updates for Sophos Firewall`r"
+        "->`r"
+        "UPS - Check IT glue UPS Tab and perform UPS Checks depending on the brand`r"
+        "EATON - https://evologic.itglue.com/4100/docs/42088`r"
+        "CYBER - https://evologic.itglue.com/4100/docs/42089`r"
+        "->`r"
+        "Documentation - Confirm and make sure Client Documents are Updated and Correct (This will base on whatever you ave done above)`r"
+        "->`r"
+    )
+}
+
 
 
 ;CUSTOM SCRIPTS;
@@ -669,5 +719,7 @@ function_nexthelp(*)
 {
 
 }
+
+Esc::Suspend
 
 return
