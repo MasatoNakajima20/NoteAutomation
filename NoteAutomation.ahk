@@ -674,13 +674,13 @@ function_nexthelp(*)
 ::!spamcheck::
 {
     SendText
-    {
-        "(Exchnage Admin) Perform Message Trace: `r"
+    (
+        "(Exchange Admin) Perform Message Trace: `r"
         "(Security Center) Check Email Headers and Confirm Return Path: `r"
         "(Security Center) Check Attachments: `r"
         "(Security Center) Check Links: `r"
         "(Azure Admin) Check user signin logs for compromise: `r"
-    }
+    )
 }
 
 
