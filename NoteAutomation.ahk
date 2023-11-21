@@ -91,17 +91,23 @@ function_changehelp(*)
             "!rep   - Report Email`r"
             "!smbxc - Shared Mailbox Created`r"
             "!spam  - Send Spam Acknowledgement EMail`r"
-            "!spam+ - Send Spam Positive Email`r"
-            "!spam- - Send Spam Negative Email`r"
+            "!spampos - Send Spam Positive Email`r"
+            "!spamneg - Send Spam Negative Email`r"
             "!spg   - SharePoint Permission Granted`r"
+        )
+    } else if(PageNumber == 3) {
+        HelpMessage := (
+            "HELP PAGE 2`r"
+            "EMAIL TEMPLATES`r"
+            "`r"
             "!spr   - SharePoint Permission Removed`r"
             "!uc    - User Created`r"
             "!udeac - User Deactivated`r"
             "!udel  - User Deleted`r"
-        )
-    } else if(PageNumber == 2) {
+        )           
+    } else if(PageNumber == 3) {
         HelpMessage := (
-            "HELP PAGE 2`r"
+            "HELP PAGE 3`r"
             "INTERNAL NOTES`r"
             "`r"
             "!te       - Add Ticket Template`r"
@@ -110,10 +116,11 @@ function_changehelp(*)
             "!callnovm - Client did not answer - No VM Available`r"
             "!callvm   - Client did not answer - Left VM`r"
             "!proac    - Proactive Checks Template`r"
+            "!spamcheck - Spam Checks Template`r"
         )
-    } else if(PageNumber == 3) {
+    } else if(PageNumber == 4) {
         HelpMessage := (
-            "HELP PAGE 3`r"
+            "HELP PAGE 4`r"
             "CUSTOM TEXT`r"
             "You can create 5 custom text by adding in your own text file and naming it c1.txt up to c5.txt and placing it under a folder named Custom`r"
             "The file Structure should look like as follows`r"
@@ -124,9 +131,9 @@ function_changehelp(*)
             "`r"
             "Custom Text can be ran by typing !c1 to !c5 then pressing space or enter. Your custom text will then be filled in. Please note that this will not autofill any names if you're making a custom email template.`r"
         )
-    } else if(PageNumber == 4) {
+    } else if(PageNumber == 5) {
         HelpMessage := (
-            "HELP PAGE 4`r"
+            "HELP PAGE 5`r"
             "Nothing in Here Yet"
             "`r"
         )
@@ -150,7 +157,7 @@ function_backhelp(*)
 function_nexthelp(*)
 {
     Global PageNumber
-    if(PageNumber == 4) {
+    if(PageNumber == 5) {
 
     } else {
         PageNumber := PageNumber + 1
@@ -436,7 +443,8 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Thank you for bringing this to our attention. Please do not open any links or attachments while we investigate the matter. If you have already clicked on any links, please give us a call immediately and we will deal with the matter with outmost urgency to make sure there are no compromise in the your account`r"
+        "Thank you for bringing this to our attention.`r"
+        "Please do not open any links or attachments while we investigate the matter. If you have already clicked on any links, please give us a call immediately and we will deal with the matter with outmost urgency to make sure there are no compromise in the your account`r"
         "`r"
         "I will get back to you as soon as possible`r"
         "`r"
@@ -445,28 +453,30 @@ function_nexthelp(*)
     )
 }
 
-::!spam+::
+::!spampos::
 {
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "I have identified the email to be a Phishing/Spam e-mail. We have blocked the original source. Please Delete all copies of the email and delete it as well from the recycle bin.`r"
+        "I have identified the email to be a Phishing/Spam e-mail.`r"
+        "We have blocked the original source. Please Delete all copies of the email and delete it as well from the Deleted Items folder in Outlook.`r"
         "`r"
         "Regards,`r"
         YourName.Value
     )
 }
 
-::!spam-::
+::!spamneg::
 {
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "I have identified the email to be a legitimate e-mail. This is safe to open.`r"
+        "I have identified the email to be a legitimate e-mail.`r"
+        "Based on the trace, the sender email is matching the source and the domain is valid. Links on the email has been scanned and turned out negative of any malicious threats.`r"
         "`r"
         "Regards,`r"
         YourName.Value
@@ -661,6 +671,18 @@ function_nexthelp(*)
     )
 }
 
+::!spamcheck::
+{
+    SendText
+    {
+        "(Exchnage Admin) Perform Message Trace: `r"
+        "(Security Center) Check Email Headers and Confirm Return Path: `r"
+        "(Security Center) Check Attachments: `r"
+        "(Security Center) Check Links: `r"
+        "(Azure Admin) Check user signin logs for compromise: `r"
+    }
+}
+
 
 
 ;CUSTOM SCRIPTS;
@@ -719,7 +741,5 @@ function_nexthelp(*)
 {
 
 }
-
-Esc::Suspend
 
 return

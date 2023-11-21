@@ -125,4 +125,14 @@ Added Functions
 11-08-2023 - John
 v0.6.6
 PATCH
+Added Functions
 !proac
+
+11-22-2023 - John
+v0.6.7
+HOTFIX
+Modified !spam+ and !spam- to !spampos and !spamneg as the symbols were not working
+
+PATCH
+Added Functions
+!spamcheck
