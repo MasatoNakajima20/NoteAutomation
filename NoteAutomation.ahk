@@ -10,7 +10,7 @@ Global Message2 := ""
 YourName := InputBox("Enter your name","Operator Name Input")
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.6.5 BETA",)
+MainGui := Gui(,"Evo Automation v0.6.7 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", YourName.Value)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
