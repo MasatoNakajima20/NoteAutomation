@@ -1,18 +1,24 @@
-﻿#SingleInstance
+﻿#Requires AutoHotkey v2.0
+#SingleInstance
 SendMode "Event"
 SetKeyDelay 30,10
 
 ;Declare Global Variables
 Global PageNumber := 1
-Global Message1 := ""
-Global Message2 := ""
+Global OperatorName := ""
+Global Signature := ""
 
-YourName := InputBox("Enter your name","Operator Name Input")
+Loop Read ".\config.ini"
+    if (A_Index = 2) {
+        OperatorName := A_LoopReadLine
+    } else if (A_Index >= 4 && A_Index <= 8) {
+        Signature := Signature A_LoopReadLine "`r"
+    }
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.6.7 BETA",)
+MainGui := Gui(,"Evo Automation v0.7 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
-MainGui.Add("Text", "w200", YourName.Value)
+MainGui.Add("Text", "w200", OperatorName)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
 MainGuiCloseBtn.OnEvent("Click", function_close)
 MainGuiHelpBtn := MainGui.Add("Button","Default w100","Help")
@@ -73,6 +79,16 @@ function_changehelp(*)
     if(PageNumber == 1) {
         HelpMessage := (
             "HELP PAGE 1`r"
+            "SETTING UP YOUR PROFILE`r"
+            "`r"
+            "Look for the config.ini file with this exe. You may Open it in Notepad and Edit the information`r"
+            "Do not move any of the CAPS sections as it will break the settings, it relies on the line position`r"
+            "`r"
+            "Keywords Will be shown on the Next Page`r"
+        )
+    } else if(PageNumber == 2) {
+        HelpMessage := (
+            "HELP PAGE 2`r"
             "EMAIL TEMPLATES`r"
             "`r"
             "!admin - Send Admin Request Security Email`r"
@@ -89,25 +105,26 @@ function_changehelp(*)
             "!mr    - Mailbox Permission Removed`r"
             "!pr    - Password Reset`r"
             "!rep   - Report Email`r"
+            "!sig   - Adds in the Signature Only`r"
             "!smbxc - Shared Mailbox Created`r"
             "!spam  - Send Spam Acknowledgement EMail`r"
             "!spampos - Send Spam Positive Email`r"
             "!spamneg - Send Spam Negative Email`r"
-            "!spg   - SharePoint Permission Granted`r"
-        )
-    } else if(PageNumber == 3) {
-        HelpMessage := (
-            "HELP PAGE 2`r"
-            "EMAIL TEMPLATES`r"
-            "`r"
-            "!spr   - SharePoint Permission Removed`r"
-            "!uc    - User Created`r"
-            "!udeac - User Deactivated`r"
-            "!udel  - User Deleted`r"
         )           
     } else if(PageNumber == 3) {
         HelpMessage := (
             "HELP PAGE 3`r"
+            "EMAIL TEMPLATES`r"
+            "`r"
+            "!spg   - SharePoint Permission Granted`r"
+            "!spr   - SharePoint Permission Removed`r"
+            "!uc    - User Created`r"
+            "!udeac - User Deactivated`r"
+            "!udel  - User Deleted`r"
+        )
+    } else if(PageNumber == 4) {
+        HelpMessage := (
+            "HELP PAGE 4`r"
             "INTERNAL NOTES`r"
             "`r"
             "!te       - Add Ticket Template`r"
@@ -118,11 +135,11 @@ function_changehelp(*)
             "!proac    - Proactive Checks Template`r"
             "!spamcheck - Spam Checks Template`r"
         )
-    } else if(PageNumber == 4) {
+    } else if(PageNumber == 5) {
         HelpMessage := (
-            "HELP PAGE 4`r"
+            "HELP PAGE 5`r"
             "CUSTOM TEXT`r"
-            "You can create 5 custom text by adding in your own text file and naming it c1.txt up to c5.txt and placing it under a folder named Custom`r"
+            "You can create 5 custom text by adding in your own text file and naming it c1.txt up to c5.txt and placing it under a folder named Custom, There should already be files Provided in this package`r"
             "The file Structure should look like as follows`r"
             "`r"
             "AutoScript.exe`r"
@@ -130,12 +147,6 @@ function_changehelp(*)
             "Custom\c1.txt`r"
             "`r"
             "Custom Text can be ran by typing !c1 to !c5 then pressing space or enter. Your custom text will then be filled in. Please note that this will not autofill any names if you're making a custom email template.`r"
-        )
-    } else if(PageNumber == 5) {
-        HelpMessage := (
-            "HELP PAGE 5`r"
-            "Nothing in Here Yet"
-            "`r"
         )
     }
 
@@ -168,6 +179,7 @@ function_nexthelp(*)
 ;HotStrings Declaration
 ::!admin::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
 
     SendText 
@@ -181,12 +193,13 @@ function_nexthelp(*)
         "If you have software that would like installed, please send through what you require and we'll schedule a time to run through the installation with you.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!!ae::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
 
     SendText 
@@ -197,12 +210,13 @@ function_nexthelp(*)
         "If the matter is becoming urgent, please call us back and we'll have a look if an escalation engineer is free.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!ar::
 {
+    Global Signature
     ApproverName := InputBox("Enter Approvers Name","Approvers Name")
     RequestorName := InputBox("Enter Requestors Name","Requestors Name")
     InfoGui.Show()
@@ -219,13 +233,14 @@ function_nexthelp(*)
         "If you have any queries, please do not hesitate to contact the Helpdesk.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
     AddInfo.Value := ""
 }
 
 ::!calg::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -241,12 +256,13 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!calr::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -255,7 +271,7 @@ function_nexthelp(*)
         "Calendar Access has been revoked. Calendar will need to be removed Manually`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
@@ -263,30 +279,37 @@ function_nexthelp(*)
 {
     SendText
     (
-        "All Task has been completed.`r"
+        "All Task on the ticket has been completed`r"
+        "Client Acknowledged completion of job`r"
         "Marking Ticket as Complete"
     )
 }
 
 ::!cb::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
         "Hi " CustName.Value ",`r"
         "`r"
         "Just tired to contact you but you seem to be caught up at the moment`r"
+        "`r"
+        "This is in regards to the request`r"
+        "<INSERT REASON FOR THE CALL>`r"
+        "`r"
         "Can you please ring me back whenever you're free on 03 5222 6677 or reply to this email if you want to schedule in a time for the call.`r"
         "`r"
         "Hope to hear from you soon.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!!escal::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     EscalPoint := InputBox("Enter Escalation Point (L2/SA/ITM)","Escalation Point")
 
@@ -298,12 +321,13 @@ function_nexthelp(*)
         "I will now be escalating this ticket to our " EscalPoint.Value " to further look into this concern. Please expect a call or a scheduling link for them to book in a time with you.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!fg::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -313,12 +337,13 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!fr::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -328,12 +353,13 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!mg::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -356,12 +382,13 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!mr::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -375,12 +402,13 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!pr::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     UserName := InputBox("Enter User Name","User Name")
     Password := InputBox("Enter Password","Password")
@@ -393,12 +421,13 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!rep::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -409,12 +438,23 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
+    )
+}
+
+::!sig::
+{
+    Global Signature
+    SendText
+    (
+        "Regards,`r"
+        Signature
     )
 }
 
 ::!smbxc::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -432,12 +472,13 @@ function_nexthelp(*)
         "Additional users can be added to access the mailbox via outlook by request.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!spam::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -449,12 +490,13 @@ function_nexthelp(*)
         "I will get back to you as soon as possible`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!spampos::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -464,12 +506,13 @@ function_nexthelp(*)
         "We have blocked the original source. Please Delete all copies of the email and delete it as well from the Deleted Items folder in Outlook.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!spamneg::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -479,12 +522,13 @@ function_nexthelp(*)
         "Based on the trace, the sender email is matching the source and the domain is valid. Links on the email has been scanned and turned out negative of any malicious threats.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!spg::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -496,12 +540,13 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!spr::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -514,12 +559,13 @@ function_nexthelp(*)
         "If there are any issues, please let us know`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!uc::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     InfoGui.Show()
     sleep 15000
@@ -535,13 +581,14 @@ function_nexthelp(*)
         "Please get back to us if there are any issues.`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
     AddInfo.Value := ""
 }
 
 ::!udeac::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -552,12 +599,13 @@ function_nexthelp(*)
         "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
 ::!udel::
 {
+    Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
     SendText 
     (
@@ -568,7 +616,7 @@ function_nexthelp(*)
         "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
         "`r"
         "Regards,`r"
-        YourName.Value
+        Signature
     )
 }
 
@@ -743,3 +791,7 @@ function_nexthelp(*)
 }
 
 return
+
+
+
+

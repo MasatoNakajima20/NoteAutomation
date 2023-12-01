@@ -136,3 +136,10 @@ Modified !spam+ and !spam- to !spampos and !spamneg as the symbols were not work
 PATCH
 Added Functions
 !spamcheck
+
+11-30-2023 - John
+v0.7
+MINOR CHANGE
+Reading User Information and Signature from Configuration Rather than enetring each time
+Added functionality to create Global Settings that can be used anywhere on the Program
+Added !sig to be able to attach Signature only on the email esp if written manually
