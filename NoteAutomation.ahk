@@ -16,7 +16,7 @@ Loop Read ".\config.ini"
     }
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.7 BETA",)
+MainGui := Gui(,"Evo Automation v0.7.1.1 BETA",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", OperatorName)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
@@ -92,6 +92,7 @@ function_changehelp(*)
             "EMAIL TEMPLATES`r"
             "`r"
             "!admin - Send Admin Request Security Email`r"
+            "!adming - Send Admin Approved Security Email`r"
             "!ae    - Send Escalation Accpetance`r"
             "!ar    - Send Approval Required Email`r"
             "!calg  - Calendar Access Granted`r"
@@ -107,15 +108,15 @@ function_changehelp(*)
             "!rep   - Report Email`r"
             "!sig   - Adds in the Signature Only`r"
             "!smbxc - Shared Mailbox Created`r"
-            "!spam  - Send Spam Acknowledgement EMail`r"
-            "!spampos - Send Spam Positive Email`r"
-            "!spamneg - Send Spam Negative Email`r"
         )           
     } else if(PageNumber == 3) {
         HelpMessage := (
             "HELP PAGE 3`r"
             "EMAIL TEMPLATES`r"
             "`r"
+            "!spam  - Send Spam Acknowledgement EMail`r"
+            "!spampos - Send Spam Positive Email`r"
+            "!spamneg - Send Spam Negative Email`r"
             "!spg   - SharePoint Permission Granted`r"
             "!spr   - SharePoint Permission Removed`r"
             "!uc    - User Created`r"
@@ -197,7 +198,32 @@ function_nexthelp(*)
     )
 }
 
-::!!ae::
+::!adming::
+{
+    Global Signature
+    CustName := InputBox("Enter Client Name","Client Name")
+    CompanyName := InputBox("Enter Company Name","Company Name")
+    MachineName := InputBox("Enter Machine Name","Machine Name")
+    UserName := InputBox("Enter User Name","User Name")
+
+    SendText 
+    (
+        "Hi " CustName.Value ",`r"
+        "`r"
+        "We generally advise against users having direct admin rights on their devices as it goes against security best practices and increases the risk and scope of potential incidents - particularly when it comes to malware & ransomware that may find its way onto the device.`r"
+        "`r"
+        "Granting admin rights to install software and make changes unrestricted also allows malicious software or scripts that find their way onto the device to run unchecked, as they'll also be running with admin rights by default on account of the user account being an administrator.`r"
+        "`r"
+        "As this has been approved, Admin access to device " MachineName.Value " for user " UserName.Value " has been added. Please Logout/Login for this to take effect"
+        "`r"
+        CompanyName.Value " accepts the risks involved in granting Administrator access on the device and releases Evologic from any liabilities incurred from any unwanted software running on the machine or security breaches that would deemed sourced from this device moving forward. Any work done by Evologic upon the said security breach would become Chargeable`r"
+        "`r"
+        "Regards,`r"
+        Signature
+    )
+}
+
+::!ae::
 {
     Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
@@ -307,7 +333,7 @@ function_nexthelp(*)
     )
 }
 
-::!!escal::
+::!escal::
 {
     Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
@@ -317,8 +343,9 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "I had a look but I'm unable to reolve the issue and unable to move further.`r"
-        "I will now be escalating this ticket to our " EscalPoint.Value " to further look into this concern. Please expect a call or a scheduling link for them to book in a time with you.`r"
+        "I had a look into the matter and this seems to be more complext than anticipated. I'm unable to resolve the issue and unable to move further.`r"
+        "`r"
+        "I will now be needing to escalating this ticket to our " EscalPoint.Value " to further look into this concern. Please expect a call or a scheduling link for them to book in a time with you.`r"
         "`r"
         "Regards,`r"
         Signature
