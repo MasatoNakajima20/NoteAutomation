@@ -16,13 +16,17 @@ Loop Read ".\config.ini"
     }
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v2023.1229 Pre-Release",)
-MainGui.Add("Text", "w200", "Current Operator:")
-MainGui.Add("Text", "w200", OperatorName)
-MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
-MainGuiCloseBtn.OnEvent("Click", function_close)
-MainGuiHelpBtn := MainGui.Add("Button","Default w100","Help")
+MainGui := Gui(,"Evo Note Automation",)
+MainGui.Add("Text", "w180", "Current Operator:")
+MainGui.Add("Text", "w180", OperatorName)
+MainGui.Add("Text", "w180", "")
+MainGui.Add("Text", "w180", "v2023.1229 Pre-Release")
+MainGuiHelpBtn := MainGui.Add("Button","Default w100 ym","Help")
 MainGuiHelpBtn.OnEvent("Click", function_help)
+MainGui.Add("Text", "w100", "")
+MainGui.Add("Text", "w100", "")
+MainGuiCloseBtn := MainGui.Add("Button", "Default w100", "Close")
+MainGuiCloseBtn.OnEvent("Click", function_close)
 MainGui.Show()
 
 ;Create the Help GUI
