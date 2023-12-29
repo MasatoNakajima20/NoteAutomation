@@ -16,7 +16,7 @@ Loop Read ".\config.ini"
     }
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Automation v0.7.1.1 BETA",)
+MainGui := Gui(,"Evo Automation v2023.1229 Pre-Release",)
 MainGui.Add("Text", "w200", "Current Operator:")
 MainGui.Add("Text", "w200", OperatorName)
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100 ym", "Close")
@@ -727,21 +727,27 @@ function_nexthelp(*)
     (
         "Starting Proactive Checks`r"
         "`r"
-        "Remote Admin Checks - Run RMM Script EVO - Monthly Proactive Checks Report, review and Send to Client`r"
+        "Remote Admin Checks - Run RMM Script EVO - Monthly Proactive Checks Report, review and Send to Client. If there are issues with the report, note it here. eg. (Licensing issues, Lots of Stale Accounts, etc.), Forward to SA first for review before sending to client`r"
         "->`r"
-        "Sophos Central - Check all Firewalls, note the serial number and check if all appliance are being backed up.`r"
+        "`r"
+        "Sophos Central - Check all Firewalls in https://central.sophos.com/, note the serial number and check if all appliance are being backed up in the backup tab.`r"
         "->`r"
+        "`r"
         "365 - Check GA Account if Working. Make Sure KB Doc is titled EVO_GA Office 365 / Azure Global Administrator`r"
         "->`r"
-        "Backups - Check Backups for client make sure all is working`r"
+        "`r"
+        "Backups - Check Backups for client make sure all are working. Datto / SaaS`r"
         "->`r"
+        "`r"
         "Firmware Updates - Check if there are Firmware Updates for Sophos Firewall`r"
         "->`r"
+        "`r"
         "UPS - Check IT glue UPS Tab and perform UPS Checks depending on the brand`r"
         "EATON - https://evologic.itglue.com/4100/docs/42088`r"
         "CYBER - https://evologic.itglue.com/4100/docs/42089`r"
         "->`r"
-        "Documentation - Confirm and make sure Client Documents are Updated and Correct (This will base on whatever you ave done above)`r"
+        "`r"
+        "Documentation - Confirm and make sure Client Documents are Updated and Correct (This will base on whatever you have done above). Eg. All Sophos Applicance Serials Should be in the Configuratons and The UPS Checks should be updated.`r"
         "->`r"
     )
 }
