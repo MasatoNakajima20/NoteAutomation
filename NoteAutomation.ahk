@@ -727,7 +727,7 @@ function_nexthelp(*)
     (
         "Starting Proactive Checks`r"
         "`r"
-        "Remote Admin Checks - Run RMM Script EVO - Monthly Proactive Checks Report, review and Send to Client. If there are issues with the report, note it here. eg. (Licensing issues, Lots of Stale Accounts, etc.), Forward to SA first for review before sending to client`r"
+        "Remote Admin Checks - Run RMM Script EVO - Monthly Proactive Checks Report, review and Send to Client. If there are issues with the report, note it here. eg. (Licensing issues, Lots of Stale Accounts, iLO Error etc.), Forward to SA first for review before sending to client if unsure`r"
         "->`r"
         "`r"
         "Sophos Central - Check all Firewalls in https://central.sophos.com/, note the serial number and check if all appliance are being backed up in the backup tab.`r"
@@ -747,7 +747,7 @@ function_nexthelp(*)
         "CYBER - https://evologic.itglue.com/4100/docs/42089`r"
         "->`r"
         "`r"
-        "Documentation - Confirm and make sure Client Documents are Updated and Correct (This will base on whatever you have done above). Eg. All Sophos Applicance Serials Should be in the Configuratons and The UPS Checks should be updated.`r"
+        "Documentation - Confirm and make sure Client Documents are Updated and Correct (This will base on whatever you have done above. Eg. All Sophos Applicance Serials Should be in the Configuratons and The UPS Checks should be updated.)`r"
         "->`r"
     )
 }
