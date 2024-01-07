@@ -634,7 +634,7 @@ function_nexthelp(*)
         "`r"
     )
 
-    if (MbxShared = "Y" || MbxShared = "y") {
+    if (MbxShared.Value = "Y" || MbxShared.Value = "y") {
         SendText 
         (
             "Mailbox Access has been granted.`r"
@@ -644,7 +644,7 @@ function_nexthelp(*)
         )
     }
 
-    if (MbxForward = "Y" || MbxForward = "y") {
+    if (MbxForward.Value = "Y" || MbxForward.Value = "y") {
         SendText 
         (
             "Emails are now being frowarded as requested.`r"
@@ -652,7 +652,7 @@ function_nexthelp(*)
         )
     }
 
-    if (MbxOOO = "Y" || MbxOOO = "y") {
+    if (MbxOOO.Value = "Y" || MbxOOO.Value = "y") {
         SendText 
         (
             "Auto Reply on the mailbox has been set. Please be advised that Auto Reply only works once per sender per day to avoid flooding and spamming the senders.`r"
