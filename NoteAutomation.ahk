@@ -20,7 +20,7 @@ MainGui := Gui(,"Evo Note Automation",)
 MainGui.Add("Text", "w180", "Current Operator:")
 MainGui.Add("Text", "w180", OperatorName)
 MainGui.Add("Text", "w180", "")
-MainGui.Add("Text", "w180", "v2023.1229 Pre-Release")
+MainGui.Add("Text", "w180", "v2024.0108 Pre-Release")
 MainGuiHelpBtn := MainGui.Add("Button","Default w100 ym","Help")
 MainGuiHelpBtn.OnEvent("Click", function_help)
 MainGui.Add("Text", "w100", "")
@@ -108,7 +108,7 @@ function_changehelp(*)
             "!fr    - File Share Access Revoked`r"
             "!mg    - Mailbox Permission Granted`r"
             "!mr    - Mailbox Permission Removed`r"
-            "!pr    - Password Reset`r"
+            "!pwr   - Password Reset`r"
             "!rep   - Report Email`r"
             "!sig   - Adds in the Signature Only`r"
             "!smbxc - Shared Mailbox Created`r"
@@ -347,7 +347,7 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "I had a look into the matter and this seems to be more complext than anticipated. I'm unable to resolve the issue and unable to move further.`r"
+        "I had a look into the matter and is unable to resolve the issue at this point in time.`r"
         "`r"
         "I will now be needing to escalating this ticket to our " EscalPoint.Value " to further look into this concern. Please expect a call or a scheduling link for them to book in a time with you.`r"
         "`r"
@@ -437,7 +437,7 @@ function_nexthelp(*)
     )
 }
 
-::!pr::
+::!pwr::
 {
     Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
@@ -621,6 +621,9 @@ function_nexthelp(*)
 {
     Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
+    MbxShared := InputBox("Is the mailbox being shared? (Y/N)","Shared?")
+    MbxForward := InputBox("Is the email being forwarded? (Y/N)","Forward?")
+    MbxOOO := InputBox("Is Autoreply set? (Y/N)","Auto Reply?")
     SendText 
     (
         "Hi " CustName.Value ",`r"
@@ -629,6 +632,36 @@ function_nexthelp(*)
         "User Account has been disabled, Marked as archive and removed from the Address Lists. All Access has been removed.`r"
         "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
         "`r"
+    )
+
+    if (MbxShared = "Y" || MbxShared = "y") {
+        SendText 
+        (
+            "Mailbox Access has been granted.`r"
+            "Please allow 30 minutes of replication time. Mailbox Should automatically show up on Outlook, if not, closing/re-opening of outlook might be required`r"
+            "If using Outlook Web Application (OWA) in the browser, please be advised that shared mailboxes will not show automatically.`r"
+            "`r"
+        )
+    }
+
+    if (MbxForward = "Y" || MbxForward = "y") {
+        SendText 
+        (
+            "Emails are now being frowarded as requested.`r"
+            "`r"
+        )
+    }
+
+    if (MbxOOO = "Y" || MbxOOO = "y") {
+        SendText 
+        (
+            "Auto Reply on the mailbox has been set. Please be advised that Auto Reply only works once per sender per day to avoid flooding and spamming the senders.`r"
+            "`r"
+        )
+    }
+
+    SendText 
+    (
         "Regards,`r"
         Signature
     )
@@ -729,9 +762,10 @@ function_nexthelp(*)
 {
     SendText
     (
-        "Starting Proactive Checks`r"
+        "STARTING PROACTIVE CHECKS`r"
+        "=========================`r"
         "`r"
-        "Remote Admin Checks - Run RMM Script EVO - Monthly Proactive Checks Report, review and Send to Client. If there are issues with the report, note it here. eg. (Licensing issues, Lots of Stale Accounts, iLO Error etc.), Forward to SA first for review before sending to client if unsure`r"
+        "Remote Admin Checks - Run RMM Script EVO - Monthly Proactive Checks Report on the DC if Client has AD, If Cloud Based, run on DMZ-TEST-1, review and Send to Client. If there are issues with the report, note it here. eg. (Licensing issues, Lots of Stale Accounts, iLO Error etc.), Forward to SA first for review before sending to client if unsure`r"
         "->`r"
         "`r"
         "Sophos Central - Check all Firewalls in https://central.sophos.com/, note the serial number and check if all appliance are being backed up in the backup tab.`r"
@@ -740,18 +774,25 @@ function_nexthelp(*)
         "365 - Check GA Account if Working. Make Sure KB Doc is titled EVO_GA Office 365 / Azure Global Administrator`r"
         "->`r"
         "`r"
-        "Backups - Check Backups for client make sure all are working. Datto / SaaS`r"
+        "Backups - Check Backups for client make sure all are working. Datto / SaaS / Azure`r"
         "->`r"
         "`r"
         "Firmware Updates - Check if there are Firmware Updates for Sophos Firewall`r"
         "->`r"
         "`r"
-        "UPS - Check IT glue UPS Tab and perform UPS Checks depending on the brand`r"
+        "UPS - Check IT glue UPS Tab and perform UPS Checks depending on the brand. Default credential should be admin / 3voup5`r"
         "EATON - https://evologic.itglue.com/4100/docs/42088`r"
         "CYBER - https://evologic.itglue.com/4100/docs/42089`r"
         "->`r"
         "`r"
-        "Documentation - Confirm and make sure Client Documents are Updated and Correct (This will base on whatever you have done above. Eg. All Sophos Applicance Serials Should be in the Configuratons and The UPS Checks should be updated.)`r"
+        "Documentation - Confirm and make sure Client Documents are Updated and Correct (This will base on whatever you have done above. Eg. All Sophos Appliance Serials Should be in the Configurations and The UPS Checks should be updated.)`r"
+        "->`r"
+        "`r"
+        "=========================`r"
+        "END OF CHECKS`r"
+        "`r"
+        "!!!IMPORTANT!!!`r"
+        "ITEMS FOR SYSAD TO DO`r"
         "->`r"
     )
 }
