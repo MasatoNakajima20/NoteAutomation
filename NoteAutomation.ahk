@@ -7,22 +7,30 @@ SetKeyDelay 30,10
 Global PageNumber := 1
 Global OperatorName := ""
 Global Signature := ""
+Global CompanyName := ""
+Global AppVersion := "v2024.0215 Pre-Release"
 
 Loop Read ".\config.ini"
     if (A_Index = 2) {
         OperatorName := A_LoopReadLine
     } else if (A_Index >= 4 && A_Index <= 8) {
         Signature := Signature A_LoopReadLine "`r"
+    } else if (A_Index = 10) {
+        CompanyName := A_LoopReadLine
     }
 
 ;Create the Main GUI
-MainGui := Gui(,"Evo Note Automation",)
+MainGui := Gui(,"Note Automation",)
 MainGui.Add("Text", "w180", "Current Operator:")
 MainGui.Add("Text", "w180", OperatorName)
+MainGui.Add("Text", "w180", "Company:")
+MainGui.Add("Text", "w180", CompanyName)
 MainGui.Add("Text", "w180", "")
-MainGui.Add("Text", "w180", "v2024.0108 Pre-Release")
+MainGui.Add("Text", "w180", AppVersion)
 MainGuiHelpBtn := MainGui.Add("Button","Default w100 ym","Help")
 MainGuiHelpBtn.OnEvent("Click", function_help)
+MainGui.Add("Text", "w100", "")
+MainGui.Add("Text", "w100", "")
 MainGui.Add("Text", "w100", "")
 MainGui.Add("Text", "w100", "")
 MainGuiCloseBtn := MainGui.Add("Button", "Default w100", "Close")
@@ -137,6 +145,8 @@ function_changehelp(*)
             "!callna   - Client not Available`r"
             "!callnovm - Client did not answer - No VM Available`r"
             "!callvm   - Client did not answer - Left VM`r"
+            "!newprinter - Adds Template for New Printer`r"
+            "!newuser - Adds Template for New User`r"
             "!proac    - Proactive Checks Template`r"
             "!spamcheck - Spam Checks Template`r"
         )
@@ -205,8 +215,9 @@ function_nexthelp(*)
 ::!adming::
 {
     Global Signature
+    Global CompanyName
     CustName := InputBox("Enter Client Name","Client Name")
-    CompanyName := InputBox("Enter Company Name","Company Name")
+    OrganizationName := InputBox("Enter Company Name","Company Name")
     MachineName := InputBox("Enter Machine Name","Machine Name")
     UserName := InputBox("Enter User Name","User Name")
 
@@ -218,9 +229,10 @@ function_nexthelp(*)
         "`r"
         "Granting admin rights to install software and make changes unrestricted also allows malicious software or scripts that find their way onto the device to run unchecked, as they'll also be running with admin rights by default on account of the user account being an administrator.`r"
         "`r"
-        "As this has been approved, Admin access to device " MachineName.Value " for user " UserName.Value " has been added. Please Logout/Login for this to take effect"
+        "As this has been approved, Admin access to device " MachineName.Value " for user " UserName.Value " has been added. Please Logout/Login for this to take effect.`r"
         "`r"
-        CompanyName.Value " accepts the risks involved in granting Administrator access on the device and releases Evologic from any liabilities incurred from any unwanted software running on the machine or security breaches that would deemed sourced from this device moving forward. Any work done by Evologic upon the said security breach would become Chargeable`r"
+        OrganizationName.Value " accepts the risks involved in granting Administrator access on the device and releases " CompanyName " from any liabilities incurred from any unwanted software running on the machine or security breaches that would deemed sourced from this device moving forward.`r"
+        "In any eventuality of a breach from the said vulnerability, " CompanyName " reserves the right to add additional Charges for any work that will be done to restore the system / repair any damages that the breach has done`r"
         "`r"
         "Regards,`r"
         Signature
@@ -277,11 +289,11 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "Calendar Access has been granted. Please wait for about 30 minutes for access to take effect`r"
-        "Please be advised that Calendars will need to be added manually in outlook by following the steps below`r"
+        "Please be advised that Calendars will need to be added manually in outlook and will not show up even if you restart the machine. Please follow the steps Below to be able to access the Calendar`r"
         "`r"
         "1. Go to the Calendars `r"
-        "2. At the Top, Look for OPEN CALENDAR then select OPEN SHARED CALENDAR`r"
-        "3. Look for your calendar`r"
+        "2. At the Top, Look for OPEN CALENDAR then select OPEN SHARED CALENDAR / On the Left Pane, Right Click the SHARED CALENDAR group then OPEN SHARED CALENDAR`r"
+        "3. Look for the calendar you want to access`r"
         "`r"
         "If there are any issues, please let us know`r"
         "`r"
@@ -319,14 +331,15 @@ function_nexthelp(*)
 {
     Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
+    Reason := InputBox("Reason for the call","Reason")
     SendText 
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Just tired to contact you but you seem to be caught up at the moment`r"
+        "Just tried to contact you but you seem to be caught up at the moment`r"
         "`r"
         "This is in regards to the request`r"
-        "<INSERT REASON FOR THE CALL>`r"
+        Reason.Value "`r"
         "`r"
         "Can you please ring me back whenever you're free on 03 5222 6677 or reply to this email if you want to schedule in a time for the call.`r"
         "`r"
@@ -392,13 +405,39 @@ function_nexthelp(*)
 {
     Global Signature
     CustName := InputBox("Enter Client Name","Client Name")
+    SendASGranted := InputBox("Send As Granted? (Y/N)","Send As")
     SendText 
     (
         "Hi " CustName.Value ",`r"
         "`r"
         "Mailbox Access has been granted.`r"
         "Please allow 30 minutes of replication time. Mailbox Should automatically show up on Outlook, if not, closing/re-opening of outlook might be required`r"
-        "If using Outlook Web Application (OWA) in the browser, please be advised that shared mailboxes will not show automatically. There are 2 ways to access a shared mailbox in OWA. Please follow the steps below only if using OWA`r"
+        "`r"
+    )
+
+    if (SendASGranted.Value = "Y" || SendASGranted.Value = "y") {
+        SendText 
+        (
+            "The ability to Send Emails and forward emails from the mailbox has also been granted`r"
+            "To utilize this, please be advised that you need to manually enable the `"FROM`" field in outlook manually. It can be found under `"OPTIONS`" > `"SHOW FILEDS`""
+            "`r"
+        )
+    }
+
+    SendText 
+    (   
+        "If using Outlook Web Application (OWA) in the browser, please be advised that shared mailboxes will not show automatically.`r"
+        "Please look at the end of this email for instructions on how to add Shared Mailboxes in OWA`r"
+        "`r"
+        "Regards,`r"
+        Signature
+    )
+
+    SendText
+    (
+        "`r"
+        "`r"
+        "HOW TO ADD SHARED MAILBOXES WHEN USING THE OUTLOOK WEB APP (OWA)`r"
         "`r"
         "OPENING AS ANOTHER MAILBOX`r"
         "1. Click on the Profile Circle on the top right corner of OWA`r"
@@ -408,12 +447,10 @@ function_nexthelp(*)
         "ADDING AS SHARED FOLDER`r"
         "1. On the left Pane, Right Click 'Folders'`r"
         "2. Click on 'Add Shared Folder or Mailbox'`r"
-        "3. Search for your Mailbox and Add`r"
+        "3. Search for your Mailbox and Add. If nothing is showing on the search, you will need to use the full email address`r"
         "`r"
-        "If there are any issues, please let us know`r"
+        "If you're having issues following the steps above to access the mailbox in OWA, please give us a call so we can share screen and assist.`r"
         "`r"
-        "Regards,`r"
-        Signature
     )
 }
 
@@ -565,8 +602,8 @@ function_nexthelp(*)
     (
         "Hi " CustName.Value ",`r"
         "`r"
-        "Access to SharePoint / Sharepoint Library has been granted. This should take from 5 minutes up to 30 minutes to reflect`r"
-        "If you're using One Drive, please be advised that this will not show up automatically in File Explorer and needs to be synced Manually`r"
+        "Access to SharePoint / SharePoint Library has been granted. This should take from 5 minutes up to 30 minutes to reflect`r"
+        "If you're using One Drive, please be advised that this will not show up automatically in File Explorer and needs to be synced Manually. To do this, just go to SharePoint Online, in to the library then hit Sync at the top.`r"
         "`r"
         "If there are any issues, please let us know`r"
         "`r"
@@ -624,22 +661,36 @@ function_nexthelp(*)
     MbxShared := InputBox("Is the mailbox being shared? (Y/N)","Shared?")
     MbxForward := InputBox("Is the email being forwarded? (Y/N)","Forward?")
     MbxOOO := InputBox("Is Autoreply set? (Y/N)","Auto Reply?")
+    LitHold := InputBox("Is this account under Litigation? (Y/N)","Litigation Hold?")
+    MFARevoked := InputBox("Has MFA been revoked and Signed Out of all sessions? (Y/N)","MFA Revoked?")
     SendText 
     (
         "Hi " CustName.Value ",`r"
         "`r"
         "This request has been completed`r"
-        "User Account has been disabled, Marked as archive and removed from the Address Lists. All Access has been removed.`r"
+        "User Account has been disabled, Marked as archive and removed from the Address Lists. All Access has been removed including group memberships.`r"
+        "The Mailbox has also been converted to a `"Shared Type`" mailbox to preserve/archive its contents.`r"
         "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
         "`r"
     )
+
+    if (MFARevoked.Value = "Y" || MFARevoked.Value = "y") {
+        SendText 
+        (
+            "User Sessions have now been revoked and a force logout has been sent to the account`r"
+            "MFA registrations have been revoked and cleared from the system. Tokens will stop working for the cleared MFA Methods`r"
+            "`r"
+        )
+    }
 
     if (MbxShared.Value = "Y" || MbxShared.Value = "y") {
         SendText 
         (
             "Mailbox Access has been granted.`r"
             "Please allow 30 minutes of replication time. Mailbox Should automatically show up on Outlook, if not, closing/re-opening of outlook might be required`r"
+            "`r"
             "If using Outlook Web Application (OWA) in the browser, please be advised that shared mailboxes will not show automatically.`r"
+            "Please look at the end of this email for instructions on how to add Shared Mailboxes in OWA`r"
             "`r"
         )
     }
@@ -647,7 +698,7 @@ function_nexthelp(*)
     if (MbxForward.Value = "Y" || MbxForward.Value = "y") {
         SendText 
         (
-            "Emails are now being frowarded as requested.`r"
+            "Emails are being forwarded as requested.`r"
             "`r"
         )
     }
@@ -660,11 +711,39 @@ function_nexthelp(*)
         )
     }
 
+    if (LitHold.Value = "Y" || LitHold.Value = "y") {
+        SendText 
+        (
+            "Please be advised that Mailbox has an active Online Archive / Litigation Hold. The mailbox will need to retain it licensing for it to keep the Emails in the Online Archive. Please let us know if you want to cancel this to save cost of the licensing.`r"
+            "Please be advised that any emails that has alredy been moved to the Online Archive will be lost as soon as the License is removed and there is no way of recovering that`r"
+            "`r"
+        )
+    }
+
     SendText 
     (
         "Regards,`r"
         Signature
     )
+
+    if (MbxShared.Value = "Y" || MbxShared.Value = "y") {
+        SendText
+        (
+            "`r"
+            "`r"
+            "HOW TO ADD SHARED MAILBOXES WHEN USING THE OUTLOOK WEB APP (OWA)`r"
+            "`r"
+            "OPENING AS ANOTHER MAILBOX`r"
+            "1. Click on the Profile Circle on the top right corner of OWA`r"
+            "2. Select Open another Mailbox`r"
+            "3. Search for your mailbox and Open`r"
+            "`r"
+            "ADDING AS SHARED FOLDER`r"
+            "1. On the left Pane, Right Click 'Folders'`r"
+            "2. Click on 'Add Shared Folder or Mailbox'`r"
+            "3. Search for your Mailbox and Add. If nothing is showing on the search, you will need to use the full email address`r"
+        )
+    }
 }
 
 ::!udel::
@@ -676,7 +755,9 @@ function_nexthelp(*)
         "Hi " CustName.Value ",`r"
         "`r"
         "This request has been completed`r"
-        "User Account has been deleted as requested. Backups have been removed. Please be advised that all data under retention will be purged after 30 days and after that, there will be no more chance of recovery`r"
+        "User Account has been deleted as requested. Backups have been removed. This is an irreversible action. Request for recovery might be chargeable`r"
+        "If using Microsoft 365, Data will be preserved for the next 30 days. After that the data will be purged`r"
+        "`r"
         "Please wait for around 30 minutes for the Global Address Book to Update and up to 72 hours for the Offline Address List to follow`r"
         "`r"
         "Regards,`r"
@@ -809,6 +890,35 @@ function_nexthelp(*)
     )
 }
 
+::!newuser::
+{
+    SendText
+    (
+        "Name: `r"
+        "Login: `r"
+        "Email: `r"
+        "Email Aliases: `r"
+        "->`r"
+        "Password: `r"
+        "`r"
+        "Job Title: `r"
+        "Access Copied From: `r"
+    )
+}
+
+::!newprinter::
+{
+    SendText
+    (
+        "Model: `r"
+        "Connection Type (USB/Network): "
+        "IP: `r"
+        "Printer Name: `r"
+        "Share Name: `r"
+        "`r"
+        "Deployed on Policy (Y/N): `r"
+    )
+}
 
 
 ;CUSTOM SCRIPTS;

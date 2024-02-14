@@ -159,8 +159,25 @@ v2023.1229 Pre-Release
 Major Change on Versioning
 Added more details on !proac hotscript
 
-01-08-2023
+01-08-2024
 v2024.0108 Pre-Release
 !udeac script has been changed to allow separated actions to be emailed
-bugfix
 
+Added Templates
+!newuser
+
+02-15-2024
+v2024.0215 Pre-Release
+APP CHANGES
+Added Company Setting
+
+SCRIPT CHANGES
+!adming - Added Disclaimer about the risks and charges involved
+!mg - Added Send As Template
+!mg - Added more Detailed instruction for Shared Mailboxes in OWA
+!mg - Modified Email
+!newuser - Added Email Alias Section
+!newprinter - Added New Template
+!spg - Added more text
+!udeac - Added section for Litigation Hold
+!udel - Changed Email
